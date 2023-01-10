@@ -1,0 +1,6 @@
+name: RSB
+version: 0.0.1
+description: Plugin na SkyBlock
+author: Revo
+
+main: com.revo.skyblock.Plugin
