@@ -11,7 +11,6 @@ import java.util.List;
 public class Region {
 
     private Location center;
-    // TODO: Przemyśleć możliwość powiększania regionu
 
     public List<Location> getProtectedLocations(){
         return null;

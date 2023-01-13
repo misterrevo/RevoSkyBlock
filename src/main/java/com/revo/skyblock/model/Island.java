@@ -11,6 +11,6 @@ public class Island {
 
     private Long id;
     private Region region;
-    private String ownerName;
-    private List<String> members;
+    private User owner;
+    private List<User> members;
 }
