@@ -1,13 +1,13 @@
 package com.revo.skyblock;
 
+import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.revo.skyblock.application.ProvideModule;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Plugin extends JavaPlugin {
 
-    private final Injector injector = Guice.createInjector(new ProvideModule());
+    private final Injector injector = Guice.createInjector(new AbstractModule() {});
     private static Plugin applicationContext;
 
     @Override
