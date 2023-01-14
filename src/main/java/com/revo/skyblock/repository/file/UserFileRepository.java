@@ -4,16 +4,19 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.revo.skyblock.Plugin;
 import com.revo.skyblock.exception.SaveException;
+import com.revo.skyblock.model.Island;
 import com.revo.skyblock.model.User;
 import com.revo.skyblock.repository.UserRepository;
 import com.revo.skyblock.util.Constants;
 import com.revo.skyblock.util.Utils;
 import lombok.RequiredArgsConstructor;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 @Singleton
@@ -35,7 +38,6 @@ public class UserFileRepository implements UserRepository {
         yamlConfiguration.set("id", user.getId());
         yamlConfiguration.set("uuid", user.getUuid().toString());
         yamlConfiguration.set("name", user.getName());
-        yamlConfiguration.set("island", user.getIsland().getId());
         try {
             yamlConfiguration.save(file);
         } catch (IOException e) {
@@ -47,6 +49,18 @@ public class UserFileRepository implements UserRepository {
 
     @Override
     public Optional<User> findByUUID(String uuid) {
+        final File file = new File(Utils.getPluginPath() + Constants.MAIN_FOLDER + Constants.SLASH + Constants.USERS_FOLDER);
+        for (File target : file.listFiles()) {
+            final YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(target);
+            if(yamlConfiguration.get("uuid").equals(uuid)) {
+                final User user = User.builder()
+                        .id(yamlConfiguration.getLong("id"))
+                        .uuid(UUID.fromString(yamlConfiguration.getString("uuid")))
+                        .name(yamlConfiguration.getString("name"))
+                        .build();
+                return Optional.of(user);
+            }
+        }
         return Optional.empty();
     }
 }

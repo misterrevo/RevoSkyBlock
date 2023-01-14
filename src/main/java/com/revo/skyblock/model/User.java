@@ -13,7 +13,6 @@ public class User {
     private Long id;
     private UUID uuid;
     private String name;
-    private Island island;
 
     public static User of(Player player) {
         return User.builder()
