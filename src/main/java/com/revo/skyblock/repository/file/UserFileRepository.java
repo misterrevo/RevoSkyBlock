@@ -28,7 +28,7 @@ public class UserFileRepository implements UserRepository {
     private final FileManager fileManager;
     
     @Override
-    public User save(User user) throws SaveException{
+    public User save(final User user) throws SaveException{
         if(user.getId() == null) {
             user.setId(Utils.getLastId(Constants.USERS_FOLDER));
         }
@@ -48,7 +48,7 @@ public class UserFileRepository implements UserRepository {
     }
 
     @Override
-    public Optional<User> findByUUID(String uuid) {
+    public Optional<User> findByUUID(final String uuid) {
         final File file = new File(Utils.getPluginPath() + Constants.MAIN_FOLDER + Constants.SLASH + Constants.USERS_FOLDER);
         for (File target : file.listFiles()) {
             final YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(target);
