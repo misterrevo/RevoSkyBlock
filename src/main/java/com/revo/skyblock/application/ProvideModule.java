@@ -12,14 +12,15 @@ import com.revo.skyblock.repository.file.UserFileRepository;
 import com.revo.skyblock.service.IslandService;
 import com.revo.skyblock.service.IslandServiceImpl;
 import com.revo.skyblock.util.Utils;
+import com.revo.skyblock.world.EmptyChunkGenerator;
 import com.revo.skyblock.world.WorldManager;
 import com.revo.skyblock.world.WorldManagerImpl;
 
 public class ProvideModule extends AbstractModule {
 
     @Provides
-    WorldManager worldManager() {
-        return new WorldManagerImpl();
+    WorldManager worldManager(final EmptyChunkGenerator emptyChunkGenerator) {
+        return new WorldManagerImpl(emptyChunkGenerator);
     }
 
     @Provides
