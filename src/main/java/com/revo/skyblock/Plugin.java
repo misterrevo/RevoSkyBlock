@@ -22,7 +22,6 @@ public class Plugin extends JavaPlugin {
         injector.getInstance(FileManager.class).checkFiles();
         injector.getInstance(WorldManager.class).checkWorld();
         Bukkit.getServer().getPluginManager().registerEvents(injector.getInstance(SavePlayerListener.class), this);
-        getCommand("test").setExecutor(injector.getInstance(TestExecutor.class));
     }
 
     public Injector getInjector() {
