@@ -33,13 +33,14 @@ public class IslandFileRepository implements IslandRepository {
 
     private final FileManager fileManager;
     private final UserRepository userRepository;
+    private final Utils utils;
 
     @Override
     public Island save(final Island island) throws SaveException {
         if(island.getId() == null) {
-            island.setId(Utils.getLastId(Constants.ISLANDS_FOLDER));
+            island.setId(utils.getLastId(Constants.ISLANDS_FOLDER));
         }
-        final File file = new File(Utils.getPluginPath() + Constants.MAIN_FOLDER + Constants.SLASH + Constants.ISLANDS_FOLDER + Constants.SLASH + island.getId() + Constants.YAML_SUFFIX);
+        final File file = new File(utils.getPluginPath() + Constants.MAIN_FOLDER + Constants.SLASH + Constants.ISLANDS_FOLDER + Constants.SLASH + island.getId() + Constants.YAML_SUFFIX);
         fileManager.checkFile(file);
         final YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(file);
         yamlConfiguration.set("id", island.getId());
@@ -61,7 +62,7 @@ public class IslandFileRepository implements IslandRepository {
 
     @Override
     public void deleteByOwnerName(final String ownerName) throws DeleteException {
-        final File file = new File(Utils.getPluginPath() + Constants.MAIN_FOLDER + Constants.SLASH + Constants.ISLANDS_FOLDER);
+        final File file = new File(utils.getPluginPath() + Constants.MAIN_FOLDER + Constants.SLASH + Constants.ISLANDS_FOLDER);
         for (File target : file.listFiles()) {
             final YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(target);
             if(yamlConfiguration.get("owner").equals(Bukkit.getPlayer(ownerName).getUniqueId())) {
@@ -75,7 +76,7 @@ public class IslandFileRepository implements IslandRepository {
 
     @Override
     public Optional<Island> findByOwnerName(final String ownerName) {
-        final File file = new File(Utils.getPluginPath() + Constants.MAIN_FOLDER + Constants.SLASH + Constants.ISLANDS_FOLDER);
+        final File file = new File(utils.getPluginPath() + Constants.MAIN_FOLDER + Constants.SLASH + Constants.ISLANDS_FOLDER);
         for (File target : file.listFiles()) {
             final YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(target);
             if(yamlConfiguration.get("owner").equals(Bukkit.getPlayer(ownerName).getUniqueId())) {

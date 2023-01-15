@@ -71,7 +71,6 @@ public class IslandServiceImpl implements IslandService{
         }
         final User user = User.of(player);
         members.add(user);
-        user.setIsland(island);
         return messageManager.getAddMemberSuccess();
     }
 
@@ -86,7 +85,6 @@ public class IslandServiceImpl implements IslandService{
         final List<User> members = island.getMembers();
         for(User user : members) {
             if (user.getName().equals(memberName)) {
-                user.setIsland(null);
                 members.remove(user);
                 return messageManager.getRemoveMemberSuccess();
             }

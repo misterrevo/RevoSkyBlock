@@ -1,6 +1,8 @@
 package com.revo.skyblock.util;
 
-public abstract class Constants {
+public class Constants {
+
+    private Constants() {}
 
     public static final String MAIN_FOLDER = "RSB";
     public static final String SLASH = "/";

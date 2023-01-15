@@ -26,13 +26,14 @@ public class UserFileRepository implements UserRepository {
     private static final Logger log = Plugin.getApplicationContext().getLogger();
 
     private final FileManager fileManager;
+    private final Utils utils;
     
     @Override
     public User save(final User user) throws SaveException{
         if(user.getId() == null) {
-            user.setId(Utils.getLastId(Constants.USERS_FOLDER));
+            user.setId(utils.getLastId(Constants.USERS_FOLDER));
         }
-        final File file = new File(Utils.getPluginPath() + Constants.MAIN_FOLDER + Constants.SLASH + Constants.USERS_FOLDER + Constants.SLASH + user.getId() + Constants.YAML_SUFFIX);
+        final File file = new File(utils.getPluginPath() + Constants.MAIN_FOLDER + Constants.SLASH + Constants.USERS_FOLDER + Constants.SLASH + user.getId() + Constants.YAML_SUFFIX);
         fileManager.checkFile(file);
         final YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(file);
         yamlConfiguration.set("id", user.getId());
@@ -49,7 +50,7 @@ public class UserFileRepository implements UserRepository {
 
     @Override
     public Optional<User> findByUUID(final String uuid) {
-        final File file = new File(Utils.getPluginPath() + Constants.MAIN_FOLDER + Constants.SLASH + Constants.USERS_FOLDER);
+        final File file = new File(utils.getPluginPath() + Constants.MAIN_FOLDER + Constants.SLASH + Constants.USERS_FOLDER);
         for (File target : file.listFiles()) {
             final YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(target);
             if(yamlConfiguration.get("uuid").equals(uuid)) {
@@ -62,5 +63,17 @@ public class UserFileRepository implements UserRepository {
             }
         }
         return Optional.empty();
+    }
+
+    @Override
+    public boolean existsByName(String name) {
+        final File file = new File(utils.getPluginPath() + Constants.MAIN_FOLDER + Constants.SLASH + Constants.USERS_FOLDER);
+        for (File target : file.listFiles()) {
+            final YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(target);
+            if(yamlConfiguration.get("name").equals(name)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface UserRepository {
     User save(final User user) throws SaveException;
     Optional<User> findByUUID(final String uuid);
+    boolean existsByName(final String name);
 }

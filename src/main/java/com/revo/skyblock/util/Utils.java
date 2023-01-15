@@ -1,18 +1,20 @@
 package com.revo.skyblock.util;
 
+import com.google.inject.Singleton;
 import com.revo.skyblock.Plugin;
 import org.bukkit.Location;
 
 import java.io.File;
 import java.util.logging.Logger;
 
-public abstract class Utils {
+@Singleton
+public class Utils {
 
     private static final Logger log = Plugin.getApplicationContext().getLogger();
 
-    public static String getPluginPath() {
+    public String getPluginPath() {
         try {
-            final String path = Utils.class.getClass().getProtectionDomain().getCodeSource().getLocation()
+            final String path = getClass().getProtectionDomain().getCodeSource().getLocation()
                     .toURI().getPath();
             final StringBuilder stringBuilder = new StringBuilder();
             final String[] pathSplit = path.split("/");
@@ -22,12 +24,13 @@ public abstract class Utils {
             return stringBuilder.toString().replaceFirst("/", "");
         } catch (Exception exception) {
             log.info("Utils - getPluginPath() - error");
+            exception.printStackTrace();
             return null;
         }
     }
 
-    public static long getLastId(String folderName) {
-        final File file = new File(Utils.getPluginPath() + Constants.MAIN_FOLDER + Constants.SLASH + folderName);
+    public long getLastId(String folderName) {
+        final File file = new File(getPluginPath() + Constants.MAIN_FOLDER + Constants.SLASH + folderName);
         long max = 0;
         for (File target : file.listFiles()) {
             long id = Long.valueOf(target.getName().split(Constants.DOT)[0]);
