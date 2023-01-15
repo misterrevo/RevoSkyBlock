@@ -11,7 +11,8 @@ import java.util.List;
 public class Island {
 
     private Long id;
-    private Region region;
+    @Builder.Default
+    private Region region = Region.builder().build();
     private User owner;
     @Builder.Default
     private List<User> members = new ArrayList<>();

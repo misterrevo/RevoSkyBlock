@@ -3,8 +3,10 @@ package com.revo.skyblock;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.revo.skyblock.application.ProvideModule;
+import com.revo.skyblock.command.IslandExecutor;
 import com.revo.skyblock.listener.SavePlayerListener;
 import com.revo.skyblock.repository.file.FileManager;
+import com.revo.skyblock.util.Constants;
 import com.revo.skyblock.world.WorldManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,6 +23,7 @@ public class Plugin extends JavaPlugin {
         injector.getInstance(FileManager.class).checkFiles();
         injector.getInstance(WorldManager.class).checkWorld();
         Bukkit.getServer().getPluginManager().registerEvents(injector.getInstance(SavePlayerListener.class), this);
+        getCommand(Constants.COMMAND).setExecutor(injector.getInstance(IslandExecutor.class));
     }
 
     public Injector getInjector() {

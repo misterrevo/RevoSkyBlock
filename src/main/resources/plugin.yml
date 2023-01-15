@@ -4,3 +4,8 @@ description: Plugin na SkyBlock
 author: Revo
 
 main: com.revo.skyblock.Plugin
+
+commands:
+  wyspa:
+    description: "Glowna komenda pluginu RSB"
+    usage: "Wpisz /wyspa aby wyswietlic liste komend"

@@ -37,8 +37,8 @@ public class IslandServiceImpl implements IslandService{
                 .owner(User.of(player))
                 .members(List.of(User.of(player)))
                 .build();
+        worldManager.generateIsland(island);
         try {
-            worldManager.generateIsland(island);
             islandRepository.save(island);
         } catch (Exception exception) {
             log.info("IslandServiceImpl - createIsland() - error");

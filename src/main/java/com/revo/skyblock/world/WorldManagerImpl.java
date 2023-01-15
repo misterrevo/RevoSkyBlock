@@ -3,7 +3,6 @@ package com.revo.skyblock.world;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.revo.skyblock.Plugin;
-import com.revo.skyblock.exception.GenerateException;
 import com.revo.skyblock.model.Island;
 import com.revo.skyblock.model.Region;
 import com.revo.skyblock.repository.IslandRepository;
@@ -25,7 +24,7 @@ public class WorldManagerImpl implements WorldManager{
     private final IslandRepository islandRepository;
 
     @Override
-    public void generateIsland(Island island) throws GenerateException {
+    public void generateIsland(Island island) {
         final List<Island> islands = islandRepository.findAll();
         final Location location = getCenterLocation(islands);
         final Region region = island.getRegion();

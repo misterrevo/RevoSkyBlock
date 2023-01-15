@@ -19,8 +19,8 @@ import com.revo.skyblock.world.WorldManagerImpl;
 public class ProvideModule extends AbstractModule {
 
     @Provides
-    WorldManager worldManager(final EmptyChunkGenerator emptyChunkGenerator) {
-        return new WorldManagerImpl(emptyChunkGenerator);
+    WorldManager worldManager(final EmptyChunkGenerator emptyChunkGenerator, final IslandRepository islandRepository) {
+        return new WorldManagerImpl(emptyChunkGenerator, islandRepository);
     }
 
     @Provides
