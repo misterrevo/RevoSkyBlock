@@ -43,4 +43,8 @@ public class MessageManager {
     public String getRemoveMemberIsNotMember() {
         return "Ten gracz nie jest czlonkiem twojej wyspy!";
     }
+
+    public String getCreateIslandHasIsland() {
+        return "Masz juz wyspe!";
+    }
 }

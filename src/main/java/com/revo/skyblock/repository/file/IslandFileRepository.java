@@ -19,6 +19,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -90,6 +91,23 @@ public class IslandFileRepository implements IslandRepository {
             }
         }
         return Optional.empty();
+    }
+
+    @Override
+    public List<Island> findAll() {
+        final File file = new File(utils.getPluginPath() + Constants.MAIN_FOLDER + Constants.SLASH + Constants.ISLANDS_FOLDER);
+        final List<Island> islands = new ArrayList<>();
+        for (File target : file.listFiles()) {
+            final YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(target);
+            final Island island = Island.builder()
+                    .owner(userRepository.findByUUID(yamlConfiguration.getString("owner")).get())
+                    .members(getUsersFromYaml(yamlConfiguration.getStringList("members")))
+                    .region(getLocationFromYaml(yamlConfiguration.getString("center")))
+                    .id(yamlConfiguration.getLong("id"))
+                    .build();
+            islands.add(island);
+        }
+        return islands;
     }
 
     private Region getLocationFromYaml(final String center) {

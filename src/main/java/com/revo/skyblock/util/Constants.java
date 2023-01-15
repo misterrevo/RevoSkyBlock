@@ -2,6 +2,8 @@ package com.revo.skyblock.util;
 
 public class Constants {
 
+    public static final double MAX_ISLAND_ONE_SIDE_SIZE = 100;
+
     private Constants() {}
 
     public static final String MAIN_FOLDER = "RSB";

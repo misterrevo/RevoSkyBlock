@@ -30,6 +30,9 @@ public class IslandServiceImpl implements IslandService{
     @Override
     public String createIsland(final String ownerName) {
         final Player player = Bukkit.getPlayer(ownerName);
+        if (hasIsland(ownerName)) {
+            return messageManager.getCreateIslandHasIsland();
+        }
         final Island island = Island.builder()
                 .owner(User.of(player))
                 .members(List.of(User.of(player)))
@@ -41,7 +44,12 @@ public class IslandServiceImpl implements IslandService{
             log.info("IslandServiceImpl - createIsland() - error");
             return messageManager.getCreateIslandFailure();
         }
+        player.teleport(island.getRegion().getCenter());
         return messageManager.getCreateIslandSuccess();
+    }
+
+    private boolean hasIsland(String ownerName) {
+        return islandRepository.findByOwnerName(ownerName).isPresent();
     }
 
     @Override

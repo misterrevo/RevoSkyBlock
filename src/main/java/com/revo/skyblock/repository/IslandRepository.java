@@ -4,6 +4,7 @@ import com.revo.skyblock.exception.DeleteException;
 import com.revo.skyblock.exception.SaveException;
 import com.revo.skyblock.model.Island;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface IslandRepository {
@@ -13,4 +14,6 @@ public interface IslandRepository {
     void deleteByOwnerName(final String ownerName) throws DeleteException;
 
     Optional<Island> findByOwnerName(final String ownerName);
+
+    List<Island> findAll();
 }
