@@ -3,7 +3,6 @@ package com.revo.skyblock;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.revo.skyblock.application.ProvideModule;
-import com.revo.skyblock.command.TestExecutor;
 import com.revo.skyblock.listener.SavePlayerListener;
 import com.revo.skyblock.repository.file.FileManager;
 import com.revo.skyblock.world.WorldManager;
