@@ -6,11 +6,14 @@ import com.revo.skyblock.Plugin;
 import com.revo.skyblock.exception.DeleteException;
 import com.revo.skyblock.message.MessageManager;
 import com.revo.skyblock.model.Island;
+import com.revo.skyblock.model.Region;
 import com.revo.skyblock.model.User;
 import com.revo.skyblock.repository.IslandRepository;
 import com.revo.skyblock.world.WorldManager;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -55,8 +58,13 @@ public class IslandServiceImpl implements IslandService{
     @Override
     public String deleteIsland(final String ownerName) {
         try {
+            final Island island = islandRepository.findByOwnerName(ownerName).get();
+            final Region region = island.getRegion();
+            for (Location location : region.getProtectedLocations()) {
+                location.getBlock().setType(Material.AIR);
+            }
             islandRepository.deleteByOwnerName(ownerName);
-        } catch (DeleteException exception) {
+        } catch (Exception exception) {
             log.info("IslandServiceImpl - deleteIsland() - error");
             return messageManager.getDeleteIslandFailure();
         }

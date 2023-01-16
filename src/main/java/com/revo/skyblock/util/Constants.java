@@ -2,7 +2,7 @@ package com.revo.skyblock.util;
 
 public class Constants {
 
-    public static final double MAX_ISLAND_ONE_SIDE_SIZE = 100;
+    public static final double MAX_ISLAND_ONE_SIDE_SIZE = 50;
     public static final String COMMAND = "wyspa";
     public static final String CREATE_ARGUMENT = "stworz";
 
