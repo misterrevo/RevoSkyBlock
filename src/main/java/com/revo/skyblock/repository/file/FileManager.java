@@ -2,8 +2,8 @@ package com.revo.skyblock.repository.file;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.revo.skyblock.util.Constants;
 import com.revo.skyblock.Plugin;
+import com.revo.skyblock.util.Constants;
 import com.revo.skyblock.util.Utils;
 import lombok.RequiredArgsConstructor;
 

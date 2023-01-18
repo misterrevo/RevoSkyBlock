@@ -4,13 +4,11 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.revo.skyblock.Plugin;
 import com.revo.skyblock.exception.SaveException;
-import com.revo.skyblock.model.Island;
 import com.revo.skyblock.model.User;
 import com.revo.skyblock.repository.UserRepository;
 import com.revo.skyblock.util.Constants;
 import com.revo.skyblock.util.Utils;
 import lombok.RequiredArgsConstructor;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;

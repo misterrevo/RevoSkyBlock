@@ -1,7 +1,6 @@
 package com.revo.skyblock.application;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Module;
 import com.google.inject.Provides;
 import com.revo.skyblock.message.MessageManager;
 import com.revo.skyblock.repository.IslandRepository;

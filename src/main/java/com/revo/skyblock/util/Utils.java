@@ -2,7 +2,6 @@ package com.revo.skyblock.util;
 
 import com.google.inject.Singleton;
 import com.revo.skyblock.Plugin;
-import org.bukkit.Location;
 
 import java.io.File;
 import java.util.logging.Logger;
@@ -41,7 +40,7 @@ public class Utils {
         return max;
     }
 
-    public static String replaceColors(String string){
+    public String replaceColors(String string){
         return string.replaceAll("(?i)&([a-k0-9])", "\u00A7$1");
     }
 }

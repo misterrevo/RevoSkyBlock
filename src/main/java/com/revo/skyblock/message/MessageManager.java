@@ -1,50 +1,68 @@
 package com.revo.skyblock.message;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.revo.skyblock.util.Constants;
+import com.revo.skyblock.util.Utils;
+import lombok.RequiredArgsConstructor;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Singleton
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 public class MessageManager {
+
+    private final Utils utils;
+
     public String getCreateIslandSuccess() {
-        return "Pomyslnie utworzno wyspe!";
+        return utils.replaceColors("&aPomyslnie utworzno wyspe!");
     }
 
     public String getCreateIslandFailure() {
-        return "Nie udalo sie utworzyc wyspy!";
+        return utils.replaceColors("&cNie udalo sie utworzyc wyspy!");
     }
 
     public String getDeleteIslandFailure() {
-        return "Nie udalo sie usunac wyspy!";
+        return utils.replaceColors("&cNie udalo sie usunac wyspy!");
     }
 
     public String getDeleteIslandSuccess() {
-        return "Pomyslnie usunieto wyspe!";
+        return utils.replaceColors("&aPomyslnie usunieto wyspe!");
     }
 
     public String getAddMemberIslandNotFound() {
-        return "Nie posiadasz wyspy!";
+        return utils.replaceColors("&cNie posiadasz wyspy!");
     }
 
     public String getAddMemberSuccess() {
-        return "Pomyslnie dodano gracza do wyspy!";
+        return utils.replaceColors("&aPomyslnie dodano gracza do wyspy!");
     }
 
     public String getAddMemberIsMember() {
-        return "Ten gracz nalezy juz do twojej wyspy!";
+        return utils.replaceColors("&cTen gracz nalezy juz do twojej wyspy!");
     }
 
     public String getRemoveMemberIslandNotFound() {
-        return "Nie posiadasz wyspy!";
+        return utils.replaceColors("&cNie posiadasz wyspy!");
     }
 
     public String getRemoveMemberSuccess() {
-        return "Pomyslnie usunieto gracza z wyspy";
+        return utils.replaceColors("&aPomyslnie usunieto gracza z wyspy");
     }
 
     public String getRemoveMemberIsNotMember() {
-        return "Ten gracz nie jest czlonkiem twojej wyspy!";
+        return utils.replaceColors("&cTen gracz nie jest czlonkiem twojej wyspy!");
     }
 
     public String getCreateIslandHasIsland() {
-        return "Masz juz wyspe!";
+        return utils.replaceColors("&cMasz juz wyspe!");
+    }
+
+    public List<String> getHelpCommand(){
+        return Arrays.asList(
+                utils.replaceColors("&a]----------[RSB]----------["),
+                utils.replaceColors("&c/" + Constants.COMMAND + " " + Constants.CREATE_ARGUMENT + " &8- &atworzy nowa wyspe")
+        );
     }
 }

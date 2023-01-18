@@ -5,6 +5,9 @@ public class Constants {
     public static final double MAX_ISLAND_ONE_SIDE_SIZE = 50;
     public static final String COMMAND = "wyspa";
     public static final String CREATE_ARGUMENT = "stworz";
+    public static final String DELETE_ARGUMENT = "usun";
+    public static final String ADD_MEMBER_ARGUMENT = "dodaj";
+    public static final String REMOVE_MEMBER_ARGUMENT = "wyrzuc";
 
     private Constants() {}
 

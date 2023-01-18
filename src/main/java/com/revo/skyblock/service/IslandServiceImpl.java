@@ -3,7 +3,6 @@ package com.revo.skyblock.service;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.revo.skyblock.Plugin;
-import com.revo.skyblock.exception.DeleteException;
 import com.revo.skyblock.message.MessageManager;
 import com.revo.skyblock.model.Island;
 import com.revo.skyblock.model.Region;
