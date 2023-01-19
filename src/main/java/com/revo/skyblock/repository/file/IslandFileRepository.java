@@ -43,10 +43,12 @@ public class IslandFileRepository implements IslandRepository {
         final File file = new File(utils.getPluginPath() + Constants.MAIN_FOLDER + Constants.SLASH + Constants.ISLANDS_FOLDER + Constants.SLASH + island.getId() + Constants.YAML_SUFFIX);
         fileManager.checkFile(file);
         final YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(file);
+
         yamlConfiguration.set("id", island.getId());
         yamlConfiguration.set("center", locationToYaml(island.getRegion().getCenter()));
         yamlConfiguration.set("owner", island.getOwner().getUuid().toString());
         yamlConfiguration.set("members", island.getMembers().stream().map(member -> member.getUuid().toString()));
+        yamlConfiguration.set("home", locationToYaml(island.getHome()));
         try {
             yamlConfiguration.save(file);
         } catch (IOException e) {
@@ -80,16 +82,23 @@ public class IslandFileRepository implements IslandRepository {
         for (File target : file.listFiles()) {
             final YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(target);
             if(yamlConfiguration.get("owner").equals(Bukkit.getPlayer(ownerName).getUniqueId())) {
-                final Island island = Island.builder()
-                        .owner(userRepository.findByUUID(yamlConfiguration.getString("owner")).get())
-                        .members(getUsersFromYaml(yamlConfiguration.getStringList("members")))
-                        .region(getLocationFromYaml(yamlConfiguration.getString("center")))
-                        .id(yamlConfiguration.getLong("id"))
-                        .build();
+                final Island island = buildIsland(yamlConfiguration);
                 return Optional.of(island);
             }
         }
         return Optional.empty();
+    }
+
+    private Island buildIsland(YamlConfiguration yamlConfiguration) {
+        return Island.builder()
+                .owner(userRepository.findByUUID(yamlConfiguration.getString("owner")).get())
+                .members(getUsersFromYaml(yamlConfiguration.getStringList("members")))
+                .region(Region.builder()
+                        .center(getLocationFromYaml(yamlConfiguration.getString("center")))
+                        .build())
+                .id(yamlConfiguration.getLong("id"))
+                .home(getLocationFromYaml(yamlConfiguration.getString("home")))
+                .build();
     }
 
     @Override
@@ -98,22 +107,15 @@ public class IslandFileRepository implements IslandRepository {
         final List<Island> islands = new ArrayList<>();
         for (File target : file.listFiles()) {
             final YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(target);
-            final Island island = Island.builder()
-                    .owner(userRepository.findByUUID(yamlConfiguration.getString("owner")).get())
-                    .members(getUsersFromYaml(yamlConfiguration.getStringList("members")))
-                    .region(getLocationFromYaml(yamlConfiguration.getString("center")))
-                    .id(yamlConfiguration.getLong("id"))
-                    .build();
+            final Island island = buildIsland(yamlConfiguration);
             islands.add(island);
         }
         return islands;
     }
 
-    private Region getLocationFromYaml(final String center) {
+    private Location getLocationFromYaml(final String center) {
         final String[] points = center.split(Constants.LOCATION_SEPARATOR);
-        return Region.builder()
-                .center(new Location(Bukkit.getWorld(Constants.SKYBLOCK_WORLD), Double.valueOf(points[0]), Double.valueOf(points[1]), Double.valueOf(points[2])))
-                .build();
+        return new Location(Bukkit.getWorld(Constants.SKYBLOCK_WORLD), Double.valueOf(points[0]), Double.valueOf(points[1]), Double.valueOf(points[2]));
     }
 
     private List<User> getUsersFromYaml(final List<String> uuids) {

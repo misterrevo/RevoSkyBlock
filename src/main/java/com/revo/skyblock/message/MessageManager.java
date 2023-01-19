@@ -19,8 +19,8 @@ public class MessageManager {
         return utils.replaceColors("&aPomyslnie utworzno wyspe!");
     }
 
-    public String getCreateIslandFailure() {
-        return utils.replaceColors("&cNie udalo sie utworzyc wyspy!");
+    public String databaseExceptionMessage() {
+        return utils.replaceColors("&cInternal error, contact with administrator!");
     }
 
     public String getDeleteIslandFailure() {
@@ -62,7 +62,28 @@ public class MessageManager {
     public List<String> getHelpCommand(){
         return Arrays.asList(
                 utils.replaceColors("&a]----------[RSB]----------["),
-                utils.replaceColors("&c/" + Constants.COMMAND + " " + Constants.CREATE_ARGUMENT + " &8- &atworzy nowa wyspe")
+                utils.replaceColors("&c/" + Constants.COMMAND + " " + Constants.CREATE_ARGUMENT + " &8- &atworzy nowa wyspe"),
+                utils.replaceColors("&c/" + Constants.COMMAND + " " + Constants.DELETE_ARGUMENT + " &8- &ausuwa wyspe"),
+                utils.replaceColors("&c/" + Constants.COMMAND + " " + Constants.ADD_MEMBER_ARGUMENT + " " + Constants.NICKNAME +" &8- &adodaje gracza do wyspy"),
+                utils.replaceColors("&c/" + Constants.COMMAND + " " + Constants.REMOVE_MEMBER_ARGUMENT + " " + Constants.NICKNAME +" &8- &ausuwa gracza Z wyspy"),
+                utils.replaceColors("&c/" + Constants.COMMAND + " " + Constants.HOME_ARGUMENT + " &8- &ateleportuje na wyspe"),
+                utils.replaceColors("&c/" + Constants.COMMAND + " " + Constants.HOME_ARGUMENT + " " + Constants.SET_ARGUMENT + " &8- &austawia dom wyspy")
         );
+    }
+
+    public String getSetHomeIslandNotFound() {
+        return utils.replaceColors("&cMusisz miec wyspe zeby ustawic dom!");
+    }
+
+    public String getSetHomeSuccess() {
+        return utils.replaceColors("&aUstawiono dom wyspy!");
+    }
+
+    public String getTeleportToHomeSuccess() {
+        return utils.replaceColors("&aTeleportuje na wyspe!");
+    }
+
+    public String getTeleportToHomeFailure() {
+        return utils.replaceColors("&cMusisz miec wyspe zeby sie teleportowac!");
     }
 }

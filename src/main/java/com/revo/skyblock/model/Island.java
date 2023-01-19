@@ -2,6 +2,7 @@ package com.revo.skyblock.model;
 
 import lombok.Builder;
 import lombok.Data;
+import org.bukkit.Location;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,4 +17,5 @@ public class Island {
     private User owner;
     @Builder.Default
     private List<User> members = new ArrayList<>();
+    private Location home;
 }

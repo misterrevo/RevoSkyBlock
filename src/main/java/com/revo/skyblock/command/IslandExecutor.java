@@ -8,6 +8,8 @@ import com.revo.skyblock.command.argument.CreateArgument;
 import com.revo.skyblock.command.argument.DeleteArgument;
 import com.revo.skyblock.command.argument.HelpArgument;
 import com.revo.skyblock.command.argument.RemoveMemberArgument;
+import com.revo.skyblock.command.argument.SetHomeArgument;
+import com.revo.skyblock.command.argument.TeleportToHomeArgument;
 import com.revo.skyblock.util.Constants;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -35,6 +37,9 @@ public class IslandExecutor implements CommandExecutor {
                 if (args[0].equals(Constants.DELETE_ARGUMENT)) {
                     return injector.getInstance(DeleteArgument.class).execute(commandSender, args);
                 }
+                if (args[0].equals(Constants.HOME_ARGUMENT)) {
+                    return injector.getInstance(TeleportToHomeArgument.class).execute(commandSender, args);
+                }
             }
             if (args.length == 2) {
                 if (args[0].equals(Constants.ADD_MEMBER_ARGUMENT)) {
@@ -42,6 +47,9 @@ public class IslandExecutor implements CommandExecutor {
                 }
                 if (args[0].equals(Constants.REMOVE_MEMBER_ARGUMENT)) {
                     return injector.getInstance(RemoveMemberArgument.class).execute(commandSender, args);
+                }
+                if (args[0].equals(Constants.HOME_ARGUMENT) && args[1].equals(Constants.SET_ARGUMENT)) {
+                    return injector.getInstance(SetHomeArgument.class).execute(commandSender, args);
                 }
             }
         }
