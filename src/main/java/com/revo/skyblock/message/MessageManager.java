@@ -90,4 +90,8 @@ public class MessageManager {
     public String getSetHomeFailure() {
         return utils.replaceColors("&cMusisz byc na wyspie, zeby ustawic dom!");
     }
+
+    public String getCreateIslandSchedule() {
+        return utils.replaceColors("&cNie dawno utworzyles wyspe, musisz chwile poczekac!");
+    }
 }

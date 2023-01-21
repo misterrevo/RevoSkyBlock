@@ -2,8 +2,7 @@ package com.revo.skyblock.util;
 
 public class Constants {
 
-    private Constants() {}
-
+    public static final String CONFIG_FILE = "config.yml";
     public static final double MAX_ISLAND_ONE_SIDE_SIZE = 50;
     public static final String COMMAND = "wyspa";
     public static final String CREATE_ARGUMENT = "stworz";
@@ -21,4 +20,8 @@ public class Constants {
     public static final String DOT = ".";
     public static final String SKYBLOCK_WORLD = "skyblock";
     public static final String USERS_FOLDER = "USERS";
+    public static final String CONFIG_COMMAND_CREATE_COOLDOWN = "command.create.cooldown";
+
+    private Constants() {}
+
 }

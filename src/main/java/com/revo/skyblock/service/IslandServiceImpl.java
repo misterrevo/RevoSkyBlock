@@ -8,6 +8,7 @@ import com.revo.skyblock.model.Island;
 import com.revo.skyblock.model.Region;
 import com.revo.skyblock.model.User;
 import com.revo.skyblock.repository.IslandRepository;
+import com.revo.skyblock.scheduler.BlockCreateCommandScheduler;
 import com.revo.skyblock.util.Utils;
 import com.revo.skyblock.world.WorldManager;
 import lombok.RequiredArgsConstructor;
@@ -32,10 +33,14 @@ public class IslandServiceImpl implements IslandService{
     private final MessageManager messageManager;
 
     private final Utils utils;
+    private final BlockCreateCommandScheduler blocker;
 
     @Override
     public String createIsland(final String ownerName) {
         final Player player = Bukkit.getPlayer(ownerName);
+        if (isBlocked(ownerName)) {
+            return messageManager.getCreateIslandSchedule();
+        }
         if (hasIsland(ownerName)) {
             return messageManager.getCreateIslandHasIsland();
         }
@@ -52,10 +57,15 @@ public class IslandServiceImpl implements IslandService{
             return messageManager.databaseExceptionMessage();
         }
         player.teleport(island.getRegion().getCenter());
+        blocker.runBlockSchedule(ownerName);
         return messageManager.getCreateIslandSuccess();
     }
 
-    private boolean hasIsland(String ownerName) {
+    private boolean isBlocked(String ownerName) {
+        return blocker.getBlocked().contains(ownerName);
+    }
+
+    private boolean hasIsland(final String ownerName) {
         return islandRepository.findByOwnerName(ownerName).isPresent();
     }
 

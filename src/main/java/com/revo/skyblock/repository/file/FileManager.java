@@ -20,7 +20,6 @@ public class FileManager {
     private final Utils utils;
 
     public void checkFiles(){
-        log.info("FileManager - checkFiles() - enter ");
         final File folder = new File(utils.getPluginPath() + Constants.MAIN_FOLDER);
         if (!folder.exists()) {
             log.info("FileManager - checkFiles - mkdir " + Constants.MAIN_FOLDER);

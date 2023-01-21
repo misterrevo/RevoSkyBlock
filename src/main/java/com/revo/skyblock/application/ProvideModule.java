@@ -8,6 +8,7 @@ import com.revo.skyblock.repository.UserRepository;
 import com.revo.skyblock.repository.file.FileManager;
 import com.revo.skyblock.repository.file.IslandFileRepository;
 import com.revo.skyblock.repository.file.UserFileRepository;
+import com.revo.skyblock.scheduler.BlockCreateCommandScheduler;
 import com.revo.skyblock.service.IslandService;
 import com.revo.skyblock.service.IslandServiceImpl;
 import com.revo.skyblock.util.Utils;
@@ -33,7 +34,7 @@ public class ProvideModule extends AbstractModule {
     }
 
     @Provides
-    IslandService islandService(final WorldManager worldManager, final IslandRepository islandRepository, final MessageManager messageManager) {
-        return new IslandServiceImpl(worldManager, islandRepository, messageManager);
+    IslandService islandService(final WorldManager worldManager, final IslandRepository islandRepository, final MessageManager messageManager, final Utils utils, final BlockCreateCommandScheduler blockCreateCommandScheduler) {
+        return new IslandServiceImpl(worldManager, islandRepository, messageManager, utils, blockCreateCommandScheduler);
     }
 }

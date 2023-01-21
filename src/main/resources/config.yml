@@ -1,0 +1,11 @@
+###############
+#             #
+# RSB V 0.0.1 #
+#             #
+###############
+
+# BLOKADA CZASOWA NA KOMENDE TWORZENIA WYSPY (MINUTY)
+
+command:
+  create:
+    cooldown: 10

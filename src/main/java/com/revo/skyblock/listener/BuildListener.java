@@ -10,9 +10,17 @@ import com.revo.skyblock.util.Utils;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockBurnEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerBucketEmptyEvent;
+import org.bukkit.event.player.PlayerEggThrowEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.event.player.PlayerShearEntityEvent;
 
 import java.util.Optional;
 
@@ -26,7 +34,30 @@ public class BuildListener implements Listener {
 
     @EventHandler
     public void onBreakBlock(final BlockBreakEvent event) {
-        final Player player = event.getPlayer();
+        blockEventOutOfIsland(event, event.getPlayer());
+    }
+
+    @EventHandler
+    public void onBucketEmptied(final PlayerBucketEmptyEvent event) {
+        blockEventOutOfIsland(event, event.getPlayer());
+    }
+
+    @EventHandler
+    public void onPickupItem(final PlayerPickupItemEvent event) {
+        blockEventOutOfIsland(event, event.getPlayer());
+    }
+
+    @EventHandler
+    public void onShearEntity(final PlayerShearEntityEvent event) {
+        blockEventOutOfIsland(event, event.getPlayer());
+    }
+
+    @EventHandler
+    public void onPlaceBlock(final BlockPlaceEvent event) {
+        blockEventOutOfIsland(event, event.getPlayer());
+    }
+
+    private void blockEventOutOfIsland(final Cancellable event, final Player player) {
         if (isSkyblockWorld(player)) {
             final Optional<Island> islandOptional = islandRepository.findByOwnerName(player.getName());
             if (islandOptional.isEmpty()) {

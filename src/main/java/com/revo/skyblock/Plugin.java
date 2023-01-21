@@ -4,6 +4,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.revo.skyblock.application.ProvideModule;
 import com.revo.skyblock.command.IslandExecutor;
+import com.revo.skyblock.config.Config;
 import com.revo.skyblock.listener.SavePlayerListener;
 import com.revo.skyblock.repository.file.FileManager;
 import com.revo.skyblock.util.Constants;
@@ -20,12 +21,13 @@ public class Plugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        log.info("Plugin - onEnable() - enter");
+        log.info("Plugin - onEnable() - init application context");
 
         applicationContext = this;
 
         injector.getInstance(FileManager.class).checkFiles();
         injector.getInstance(WorldManager.class).checkWorld();
+        injector.getInstance(Config.class).checkConfig();
 
         log.info("Plugin - onEnable() - register events");
         Bukkit.getServer().getPluginManager().registerEvents(injector.getInstance(SavePlayerListener.class), this);
