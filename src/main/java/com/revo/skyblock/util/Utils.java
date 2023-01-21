@@ -1,15 +1,14 @@
 package com.revo.skyblock.util;
 
 import com.google.inject.Singleton;
-import com.revo.skyblock.Plugin;
+import lombok.extern.slf4j.Slf4j;
+import org.bukkit.Location;
 
 import java.io.File;
-import java.util.logging.Logger;
 
 @Singleton
+@Slf4j
 public class Utils {
-
-    private static final Logger log = Plugin.getApplicationContext().getLogger();
 
     public String getPluginPath() {
         try {
@@ -22,7 +21,7 @@ public class Utils {
             }
             return stringBuilder.toString().replaceFirst("/", "");
         } catch (Exception exception) {
-            log.info("Utils - getPluginPath() - error");
+            log.error("Utils - getPluginPath() - error", exception);
             exception.printStackTrace();
             return null;
         }
@@ -42,5 +41,9 @@ public class Utils {
 
     public String replaceColors(String string){
         return string.replaceAll("(?i)&([a-k0-9])", "\u00A7$1");
+    }
+
+    public boolean isSameLocation(Location target, Location location) {
+        return target.getX() == location.getX() && target.getZ() == location.getZ() && target.getY() == location.getY() && location.getWorld().getName().equals(Constants.SKYBLOCK_WORLD);
     }
 }

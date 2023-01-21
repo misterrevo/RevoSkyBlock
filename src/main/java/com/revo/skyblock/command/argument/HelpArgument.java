@@ -14,7 +14,7 @@ public class HelpArgument implements Argument {
 
     @Override
     public boolean execute(CommandSender commandSender, String[] args) {
-        messageManager.getHelpCommand().forEach(commandSender::sendMessage);
+        messageManager.getHelpCommands().forEach(commandSender::sendMessage);
         return true;
     }
 }

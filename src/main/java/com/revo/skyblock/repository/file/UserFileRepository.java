@@ -9,6 +9,7 @@ import com.revo.skyblock.repository.UserRepository;
 import com.revo.skyblock.util.Constants;
 import com.revo.skyblock.util.Utils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -19,11 +20,11 @@ import java.util.logging.Logger;
 
 @Singleton
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
+@Slf4j
 public class UserFileRepository implements UserRepository {
     
-    private static final Logger log = Plugin.getApplicationContext().getLogger();
-
     private final FileManager fileManager;
+
     private final Utils utils;
     
     @Override
@@ -39,8 +40,8 @@ public class UserFileRepository implements UserRepository {
         yamlConfiguration.set("name", user.getName());
         try {
             yamlConfiguration.save(file);
-        } catch (IOException e) {
-            log.info("UserFileRepository - save() - error");
+        } catch (IOException exception) {
+            log.error("UserFileRepository - save() - error", exception);
             throw new SaveException(user);
         }
         return user;

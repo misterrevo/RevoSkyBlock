@@ -8,6 +8,7 @@ import com.revo.skyblock.model.Region;
 import com.revo.skyblock.repository.IslandRepository;
 import com.revo.skyblock.util.Constants;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -21,11 +22,11 @@ import java.util.logging.Logger;
 
 @Singleton
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
+@Slf4j
 public class WorldManagerImpl implements WorldManager{
 
-    private static final Logger log = Plugin.getApplicationContext().getLogger();
-    
     private final EmptyChunkGenerator emptyChunkGenerator;
+
     private final IslandRepository islandRepository;
 
     @Override
@@ -59,6 +60,7 @@ public class WorldManagerImpl implements WorldManager{
             worldCreator.type(WorldType.FLAT);
             worldCreator.generator(emptyChunkGenerator);
             Bukkit.createWorld(worldCreator);
+            log.info("WorldManagerImpl - checkWorld() - created skyblock world");
         }
     }
 }

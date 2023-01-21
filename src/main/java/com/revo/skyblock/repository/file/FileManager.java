@@ -6,6 +6,7 @@ import com.revo.skyblock.Plugin;
 import com.revo.skyblock.util.Constants;
 import com.revo.skyblock.util.Utils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,9 +14,8 @@ import java.util.logging.Logger;
 
 @Singleton
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
+@Slf4j
 public class FileManager {
-
-    private static final Logger log = Plugin.getApplicationContext().getLogger();
 
     private final Utils utils;
 
@@ -42,9 +42,8 @@ public class FileManager {
         if (!file.exists()) {
             try {
                 file.createNewFile();
-            } catch (IOException e) {
-                log.info("FileManager - checkFile() - error");
-                e.printStackTrace();
+            } catch (IOException exception) {
+                log.error("FileManager - checkFile() - error", exception);
                 return false;
             }
         }

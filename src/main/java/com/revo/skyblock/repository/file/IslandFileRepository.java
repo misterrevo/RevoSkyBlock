@@ -13,6 +13,7 @@ import com.revo.skyblock.repository.UserRepository;
 import com.revo.skyblock.util.Constants;
 import com.revo.skyblock.util.Utils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -27,12 +28,13 @@ import java.util.stream.Collectors;
 
 @Singleton
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
+@Slf4j
 public class IslandFileRepository implements IslandRepository {
 
-    private static final Logger log = Plugin.getApplicationContext().getLogger();
-
     private final FileManager fileManager;
+
     private final UserRepository userRepository;
+
     private final Utils utils;
 
     @Override
@@ -51,8 +53,8 @@ public class IslandFileRepository implements IslandRepository {
         yamlConfiguration.set("home", locationToYaml(island.getHome()));
         try {
             yamlConfiguration.save(file);
-        } catch (IOException e) {
-            log.info("IslandFileRepository - save() - error");
+        } catch (IOException exception) {
+            log.error("IslandFileRepository - save() - error", exception);
             throw new SaveException(island);
         }
         return island;
@@ -72,7 +74,7 @@ public class IslandFileRepository implements IslandRepository {
                 return;
             }
         }
-        log.info("IslandFileRepository - deleteByOwnerName() - error key = %s".formatted(ownerName));
+        log.error("IslandFileRepository - deleteByOwnerName() - error key = {}", ownerName);
         throw new DeleteException(ownerName);
     }
 

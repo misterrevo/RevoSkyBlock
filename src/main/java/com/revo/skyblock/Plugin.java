@@ -8,9 +8,11 @@ import com.revo.skyblock.listener.SavePlayerListener;
 import com.revo.skyblock.repository.file.FileManager;
 import com.revo.skyblock.util.Constants;
 import com.revo.skyblock.world.WorldManager;
+import lombok.extern.slf4j.Slf4j;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+@Slf4j
 public class Plugin extends JavaPlugin {
 
     private final Injector injector = Guice.createInjector(new ProvideModule() {});
@@ -18,11 +20,17 @@ public class Plugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        log.info("Plugin - onEnable() - enter");
+
         applicationContext = this;
-        getLogger().info("Enabling SkyBlock plugin!");
+
         injector.getInstance(FileManager.class).checkFiles();
         injector.getInstance(WorldManager.class).checkWorld();
+
+        log.info("Plugin - onEnable() - register events");
         Bukkit.getServer().getPluginManager().registerEvents(injector.getInstance(SavePlayerListener.class), this);
+
+        log.info("Plugin - onEnable() - register commands");
         getCommand(Constants.COMMAND).setExecutor(injector.getInstance(IslandExecutor.class));
     }
 

@@ -59,7 +59,7 @@ public class MessageManager {
         return utils.replaceColors("&cMasz juz wyspe!");
     }
 
-    public List<String> getHelpCommand(){
+    public List<String> getHelpCommands(){
         return Arrays.asList(
                 utils.replaceColors("&a]----------[RSB]----------["),
                 utils.replaceColors("&c/" + Constants.COMMAND + " " + Constants.CREATE_ARGUMENT + " &8- &atworzy nowa wyspe"),
@@ -85,5 +85,9 @@ public class MessageManager {
 
     public String getTeleportToHomeFailure() {
         return utils.replaceColors("&cMusisz miec wyspe zeby sie teleportowac!");
+    }
+
+    public String getSetHomeFailure() {
+        return utils.replaceColors("&cMusisz byc na wyspie, zeby ustawic dom!");
     }
 }

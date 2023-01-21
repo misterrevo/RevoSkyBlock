@@ -2,15 +2,16 @@ package com.revo.skyblock.service;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.revo.skyblock.Plugin;
 import com.revo.skyblock.exception.SaveException;
 import com.revo.skyblock.message.MessageManager;
 import com.revo.skyblock.model.Island;
 import com.revo.skyblock.model.Region;
 import com.revo.skyblock.model.User;
 import com.revo.skyblock.repository.IslandRepository;
+import com.revo.skyblock.util.Utils;
 import com.revo.skyblock.world.WorldManager;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -18,17 +19,19 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 @Singleton
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
+@Slf4j
 public class IslandServiceImpl implements IslandService{
-
-    private static final Logger log = Plugin.getApplicationContext().getLogger();
-
+    
     private final WorldManager worldManager;
+
     private final IslandRepository islandRepository;
+
     private final MessageManager messageManager;
+
+    private final Utils utils;
 
     @Override
     public String createIsland(final String ownerName) {
@@ -41,10 +44,11 @@ public class IslandServiceImpl implements IslandService{
                 .members(List.of(User.of(player)))
                 .build();
         worldManager.generateIsland(island);
+        island.setHome(island.getRegion().getCenter());
         try {
             islandRepository.save(island);
         } catch (Exception exception) {
-            log.info("IslandServiceImpl - createIsland() - error");
+            log.error("IslandServiceImpl - createIsland() - error", exception);
             return messageManager.databaseExceptionMessage();
         }
         player.teleport(island.getRegion().getCenter());
@@ -65,7 +69,7 @@ public class IslandServiceImpl implements IslandService{
             }
             islandRepository.deleteByOwnerName(ownerName);
         } catch (Exception exception) {
-            log.info("IslandServiceImpl - deleteIsland() - error");
+            log.error("IslandServiceImpl - deleteIsland() - error", exception);
             return messageManager.getDeleteIslandFailure();
         }
         return messageManager.getDeleteIslandSuccess();
@@ -89,8 +93,8 @@ public class IslandServiceImpl implements IslandService{
         members.add(user);
         try {
             islandRepository.save(island);
-        } catch (SaveException e) {
-            log.info("IslandServiceImpl - addMember() - error");
+        } catch (SaveException exception) {
+            log.error("IslandServiceImpl - addMember() - error", exception);
             return messageManager.databaseExceptionMessage();
         }
         return messageManager.getAddMemberSuccess();
@@ -109,8 +113,8 @@ public class IslandServiceImpl implements IslandService{
                 members.remove(user);
                 try {
                     islandRepository.save(island);
-                } catch (SaveException e) {
-                    log.info("IslandServiceImpl - removeMember() - error");
+                } catch (SaveException exception) {
+                    log.error("IslandServiceImpl - removeMember() - error", exception);
                     return messageManager.databaseExceptionMessage();
                 }
                 return messageManager.getRemoveMemberSuccess();
@@ -126,14 +130,20 @@ public class IslandServiceImpl implements IslandService{
             return messageManager.getSetHomeIslandNotFound();
         }
         final Island island = islandOptional.get();
-        island.setHome(location);
-        try {
-            islandRepository.save(island);
-        } catch (SaveException e) {
-            log.info("IslandServiceImpl - setHome() - error");
-            return messageManager.databaseExceptionMessage();
+        final Region region = island.getRegion();
+        for (Location target : region.getProtectedLocations()) {
+            if (utils.isSameLocation(target, location)) {
+                island.setHome(location);
+                try {
+                    islandRepository.save(island);
+                } catch (SaveException exception) {
+                    log.error("IslandServiceImpl - setHome() - error", exception);
+                    return messageManager.databaseExceptionMessage();
+                }
+                return messageManager.getSetHomeSuccess();
+            }
         }
-        return messageManager.getSetHomeSuccess();
+        return messageManager.getSetHomeFailure();
     }
 
     @Override
