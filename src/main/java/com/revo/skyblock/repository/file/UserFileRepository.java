@@ -38,6 +38,7 @@ public class UserFileRepository implements UserRepository {
         yamlConfiguration.set("id", user.getId());
         yamlConfiguration.set("uuid", user.getUuid().toString());
         yamlConfiguration.set("name", user.getName());
+        yamlConfiguration.set("onCooldown", user.isOnCooldown());
         try {
             yamlConfiguration.save(file);
         } catch (IOException exception) {
@@ -57,6 +58,7 @@ public class UserFileRepository implements UserRepository {
                         .id(yamlConfiguration.getLong("id"))
                         .uuid(UUID.fromString(yamlConfiguration.getString("uuid")))
                         .name(yamlConfiguration.getString("name"))
+                        .onCooldown(yamlConfiguration.getBoolean("onCooldown"))
                         .build();
                 return Optional.of(user);
             }

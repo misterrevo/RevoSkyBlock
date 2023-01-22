@@ -34,7 +34,12 @@ public class ProvideModule extends AbstractModule {
     }
 
     @Provides
-    IslandService islandService(final WorldManager worldManager, final IslandRepository islandRepository, final MessageManager messageManager, final Utils utils, final BlockCreateCommandScheduler blockCreateCommandScheduler) {
-        return new IslandServiceImpl(worldManager, islandRepository, messageManager, utils, blockCreateCommandScheduler);
+    IslandService islandService(final WorldManager worldManager,
+                                final IslandRepository islandRepository,
+                                final MessageManager messageManager,
+                                final Utils utils,
+                                final BlockCreateCommandScheduler blockCreateCommandScheduler,
+                                final UserRepository userRepository) {
+        return new IslandServiceImpl(worldManager, islandRepository, messageManager, utils, blockCreateCommandScheduler, userRepository);
     }
 }

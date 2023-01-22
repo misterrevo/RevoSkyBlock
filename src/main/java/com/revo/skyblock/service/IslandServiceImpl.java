@@ -8,6 +8,7 @@ import com.revo.skyblock.model.Island;
 import com.revo.skyblock.model.Region;
 import com.revo.skyblock.model.User;
 import com.revo.skyblock.repository.IslandRepository;
+import com.revo.skyblock.repository.UserRepository;
 import com.revo.skyblock.scheduler.BlockCreateCommandScheduler;
 import com.revo.skyblock.util.Utils;
 import com.revo.skyblock.world.WorldManager;
@@ -20,6 +21,7 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Singleton
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
@@ -34,11 +36,13 @@ public class IslandServiceImpl implements IslandService{
 
     private final Utils utils;
     private final BlockCreateCommandScheduler blocker;
+    private final UserRepository userRepository;
 
     @Override
     public String createIsland(final String ownerName) {
         final Player player = Bukkit.getPlayer(ownerName);
-        if (isBlocked(ownerName)) {
+        final UUID uuid = player.getUniqueId();
+        if (isBlocked(uuid.toString())) {
             return messageManager.getCreateIslandSchedule();
         }
         if (hasIsland(ownerName)) {
@@ -61,8 +65,14 @@ public class IslandServiceImpl implements IslandService{
         return messageManager.getCreateIslandSuccess();
     }
 
-    private boolean isBlocked(String ownerName) {
-        return blocker.getBlocked().contains(ownerName);
+    private boolean isBlocked(String uuid) {
+        final Optional<User> userOptional = userRepository.findByUUID(uuid);
+        if (userOptional.isPresent()) {
+            final User user = userOptional.get();
+            return user.isOnCooldown();
+        }
+        // TODO: Co jesli nie ma uzytkownika? Czy taka sytuacja moze wystapic?
+        return true;
     }
 
     private boolean hasIsland(final String ownerName) {
