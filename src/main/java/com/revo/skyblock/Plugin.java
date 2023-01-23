@@ -5,6 +5,8 @@ import com.google.inject.Injector;
 import com.revo.skyblock.application.ProvideModule;
 import com.revo.skyblock.command.IslandExecutor;
 import com.revo.skyblock.config.Config;
+import com.revo.skyblock.listener.BuildListener;
+import com.revo.skyblock.listener.PvpListener;
 import com.revo.skyblock.listener.SavePlayerListener;
 import com.revo.skyblock.repository.file.FileManager;
 import com.revo.skyblock.util.Constants;
@@ -31,6 +33,8 @@ public class Plugin extends JavaPlugin {
 
         log.info("Plugin - onEnable() - register events");
         Bukkit.getServer().getPluginManager().registerEvents(injector.getInstance(SavePlayerListener.class), this);
+        Bukkit.getServer().getPluginManager().registerEvents(injector.getInstance(BuildListener.class), this);
+        Bukkit.getServer().getPluginManager().registerEvents(injector.getInstance(PvpListener.class), this);
 
         log.info("Plugin - onEnable() - register commands");
         getCommand(Constants.COMMAND).setExecutor(injector.getInstance(IslandExecutor.class));

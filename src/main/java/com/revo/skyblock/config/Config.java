@@ -19,7 +19,7 @@ public class Config {
 
     private final Utils utils;
 
-    public void checkConfig(){
+    public void checkConfig() {
         final File file = new File(utils.getPluginPath() + Constants.MAIN_FOLDER + Constants.SLASH + Constants.CONFIG_FILE);
         if (!file.exists()) {
             final Plugin plugin = Plugin.getApplicationContext();
@@ -28,12 +28,17 @@ public class Config {
         }
     }
 
-    public int getCreateCommandCooldown(){
+    public int getCreateCommandCooldown() {
         final YamlConfiguration configuration = getConfig();
         return configuration.getInt(Constants.CONFIG_COMMAND_CREATE_COOLDOWN);
     }
 
-    private YamlConfiguration getConfig(){
+    public boolean getPvpOnIsland() {
+        final YamlConfiguration configuration = getConfig();
+        return configuration.getBoolean(Constants.CONFIG_PVP);
+    }
+
+    private YamlConfiguration getConfig() {
         final File file = new File(utils.getPluginPath() + Constants.MAIN_FOLDER + Constants.SLASH + Constants.CONFIG_FILE);
         return YamlConfiguration.loadConfiguration(file);
     }

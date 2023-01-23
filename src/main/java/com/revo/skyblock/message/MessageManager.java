@@ -59,7 +59,7 @@ public class MessageManager {
         return utils.replaceColors("&cMasz juz wyspe!");
     }
 
-    public List<String> getHelpCommands(){
+    public List<String> getHelpCommands() {
         return Arrays.asList(
                 utils.replaceColors("&a]----------[RSB]----------["),
                 utils.replaceColors("&c/" + Constants.COMMAND + " " + Constants.CREATE_ARGUMENT + " &8- &atworzy nowa wyspe"),

@@ -1,5 +1,9 @@
 package com.revo.skyblock.util;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Constants {
 
     public static final String CONFIG_FILE = "config.yml";
@@ -20,8 +24,6 @@ public class Constants {
     public static final String DOT = ".";
     public static final String SKYBLOCK_WORLD = "skyblock";
     public static final String USERS_FOLDER = "USERS";
-    public static final String CONFIG_COMMAND_CREATE_COOLDOWN = "command.create.cooldown";
-
-    private Constants() {}
-
+    public static final String CONFIG_COMMAND_CREATE_COOLDOWN = "island.create.cooldown";
+    public static final String CONFIG_PVP = "island.pvp";
 }

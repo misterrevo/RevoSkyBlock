@@ -15,7 +15,7 @@ public class Region {
 
     private Location center;
 
-    public List<Location> getProtectedLocations(){
+    public List<Location> getProtectedLocations() {
         final List<Location> locations = new ArrayList<>();
         final int startZ = center.getBlockZ();
         final int startX = center.getBlockX();
