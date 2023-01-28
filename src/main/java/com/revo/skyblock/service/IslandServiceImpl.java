@@ -178,4 +178,26 @@ public class IslandServiceImpl implements IslandService{
         }
         return messageManager.getTeleportToHomeFailure();
     }
+
+    @Override
+    public String ownerChange(final String ownerName, final String newOwner) {
+        final Optional<Island> islandOptional = islandRepository.findByOwnerName(ownerName);
+        if (islandOptional.isEmpty()) {
+            return messageManager.getOwnerChangeNoIsland();
+        }
+        final Island island = islandOptional.get();
+        final Player player = Bukkit.getPlayer(newOwner);
+        if (player == null) {
+            return messageManager.getOwnerChangePlayerNotFound();
+        }
+        final User user = User.of(player);
+        island.setOwner(user);
+        try {
+            islandRepository.save(island);
+        } catch (SaveException exception) {
+            log.error("IslandServiceImpl - ownerChange() - error", exception);
+            return messageManager.databaseExceptionMessage();
+        }
+        return messageManager.getOwnerChangeSuccess();
+    }
 }

@@ -67,7 +67,8 @@ public class MessageManager {
                 utils.replaceColors("&c/" + Constants.COMMAND + " " + Constants.ADD_MEMBER_ARGUMENT + " " + Constants.NICKNAME +" &8- &adodaje gracza do wyspy"),
                 utils.replaceColors("&c/" + Constants.COMMAND + " " + Constants.REMOVE_MEMBER_ARGUMENT + " " + Constants.NICKNAME +" &8- &ausuwa gracza Z wyspy"),
                 utils.replaceColors("&c/" + Constants.COMMAND + " " + Constants.HOME_ARGUMENT + " &8- &ateleportuje na wyspe"),
-                utils.replaceColors("&c/" + Constants.COMMAND + " " + Constants.HOME_ARGUMENT + " " + Constants.SET_ARGUMENT + " &8- &austawia dom wyspy")
+                utils.replaceColors("&c/" + Constants.COMMAND + " " + Constants.HOME_ARGUMENT + " " + Constants.SET_ARGUMENT + " &8- &austawia dom wyspy"),
+                utils.replaceColors("&c/" + Constants.COMMAND + " " + Constants.OWNER_CHANGE_ARGUMENT + " " + Constants.NICKNAME + " &8- &azmienia wlasciciela wyspy")
         );
     }
 
@@ -93,5 +94,17 @@ public class MessageManager {
 
     public String getCreateIslandSchedule() {
         return utils.replaceColors("&cNie dawno utworzyles wyspe, musisz chwile poczekac!");
+    }
+
+    public String getOwnerChangeNoIsland() {
+        return utils.replaceColors("&cNie masz wyspy!");
+    }
+
+    public String getOwnerChangePlayerNotFound() {
+        return utils.replaceColors("&cNie ma takiego gracza!");
+    }
+
+    public String getOwnerChangeSuccess() {
+        return utils.replaceColors("&aZmieniono wlasciciela wyspy!");
     }
 }

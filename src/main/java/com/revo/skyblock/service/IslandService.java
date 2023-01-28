@@ -9,4 +9,5 @@ public interface IslandService {
     String removeMember(final String ownerName, final String memberName);
     String setHome(final String ownerName, final Location location);
     String teleportToHome(final String memberName);
+    String ownerChange(final String ownerName, final String newOwner);
 }

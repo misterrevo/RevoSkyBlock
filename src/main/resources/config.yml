@@ -5,10 +5,8 @@
 ###############
 
 island:
-  create:
-
+  command:
     # BLOKADA CZASOWA NA KOMENDE TWORZENIA WYSPY (MINUTY)
     cooldown: 10
-
   # PVP NA WYSPACH (TRUE/FALSE | WLACZONE/WYLACZONE)
   pvp: true

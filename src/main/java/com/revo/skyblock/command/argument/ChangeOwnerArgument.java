@@ -8,13 +8,13 @@ import org.bukkit.command.CommandSender;
 
 @Singleton
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
-public class AddMemberArgument implements Argument{
+public class ChangeOwnerArgument implements Argument{
 
     private final IslandService islandService;
 
     @Override
     public boolean execute(CommandSender commandSender, String[] args) {
-        commandSender.sendMessage(islandService.addMember(commandSender.getName(), args[1]));
+        commandSender.sendMessage(islandService.ownerChange(commandSender.getName(), args[1]));
         return true;
     }
 }
