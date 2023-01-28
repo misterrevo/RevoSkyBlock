@@ -54,7 +54,7 @@ public class IslandFileRepository implements IslandRepository {
         try {
             yamlConfiguration.save(file);
         } catch (IOException exception) {
-            log.error("IslandFileRepository - save() - error", exception);
+            log.error("[RSB] IslandFileRepository - save() - error", exception);
             throw new SaveException(island);
         }
         return island;
@@ -74,7 +74,7 @@ public class IslandFileRepository implements IslandRepository {
                 return;
             }
         }
-        log.error("IslandFileRepository - deleteByOwnerName() - error key = {}", ownerName);
+        log.error("[RSB] IslandFileRepository - deleteByOwnerName() - error key = {}", ownerName);
         throw new DeleteException(ownerName);
     }
 

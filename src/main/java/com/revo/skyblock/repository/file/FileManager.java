@@ -22,17 +22,17 @@ public class FileManager {
     public void checkFiles() {
         final File folder = new File(utils.getPluginPath() + Constants.MAIN_FOLDER);
         if (!folder.exists()) {
-            log.info("FileManager - checkFiles - mkdir " + Constants.MAIN_FOLDER);
+            log.info("[RSB] FileManager - checkFiles - mkdir " + Constants.MAIN_FOLDER);
             folder.mkdir();
         }
         final File islandsFolder = new File(utils.getPluginPath() + Constants.MAIN_FOLDER + Constants.SLASH + Constants.ISLANDS_FOLDER);
         if (!islandsFolder.exists()) {
-            log.info("FileManager - checkFiles - mkdir " + Constants.ISLANDS_FOLDER);
+            log.info("[RSB] FileManager - checkFiles - mkdir " + Constants.ISLANDS_FOLDER);
             islandsFolder.mkdir();
         }
         final File usersFolder = new File(utils.getPluginPath() + Constants.MAIN_FOLDER + Constants.SLASH + Constants.USERS_FOLDER);
         if (!usersFolder.exists()) {
-            log.info("FileManager - checkFiles - mkdir " + Constants.USERS_FOLDER);
+            log.info("[RSB] FileManager - checkFiles - mkdir " + Constants.USERS_FOLDER);
             usersFolder.mkdir();
         }
     }
@@ -42,7 +42,7 @@ public class FileManager {
             try {
                 file.createNewFile();
             } catch (IOException exception) {
-                log.error("FileManager - checkFile() - error", exception);
+                log.error("[RSB] FileManager - checkFile() - error", exception);
                 return false;
             }
         }

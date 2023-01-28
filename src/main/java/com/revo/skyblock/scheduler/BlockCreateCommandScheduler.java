@@ -38,7 +38,7 @@ public class BlockCreateCommandScheduler {
             try {
                 userRepository.save(user);
             } catch (SaveException exception) {
-                log.error("BlockCreateCommandScheduler - runBlockSchedule() - error", exception);
+                log.error("[RSB] BlockCreateCommandScheduler - runBlockSchedule() - error", exception);
                 return;
             }
             Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.getApplicationContext(), new Runnable() {
@@ -48,7 +48,7 @@ public class BlockCreateCommandScheduler {
                     try {
                         userRepository.save(user);
                     } catch (SaveException exception) {
-                        log.error("Runnable - run() - error", exception);
+                        log.error("[RSB] Runnable - run() - error", exception);
                     }
                 }
             }, 20L * 60 * config.getCreateCommandCooldown());

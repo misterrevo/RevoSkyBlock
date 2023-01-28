@@ -23,7 +23,7 @@ public class Plugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        log.info("Plugin - onEnable() - init application context");
+        log.info("[RSB] Plugin - onEnable() - init application context");
 
         applicationContext = this;
 
@@ -31,12 +31,12 @@ public class Plugin extends JavaPlugin {
         injector.getInstance(WorldManager.class).checkWorld();
         injector.getInstance(Config.class).checkConfig();
 
-        log.info("Plugin - onEnable() - register events");
+        log.info("[RSB] Plugin - onEnable() - register events");
         Bukkit.getServer().getPluginManager().registerEvents(injector.getInstance(SavePlayerListener.class), this);
         Bukkit.getServer().getPluginManager().registerEvents(injector.getInstance(BuildListener.class), this);
         Bukkit.getServer().getPluginManager().registerEvents(injector.getInstance(PvpListener.class), this);
 
-        log.info("Plugin - onEnable() - register commands");
+        log.info("[RSB] Plugin - onEnable() - register commands");
         getCommand(Constants.COMMAND).setExecutor(injector.getInstance(IslandExecutor.class));
     }
 

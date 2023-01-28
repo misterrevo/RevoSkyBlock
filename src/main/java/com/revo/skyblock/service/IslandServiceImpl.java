@@ -57,7 +57,7 @@ public class IslandServiceImpl implements IslandService{
         try {
             islandRepository.save(island);
         } catch (Exception exception) {
-            log.error("IslandServiceImpl - createIsland() - error", exception);
+            log.error("[RSB] IslandServiceImpl - createIsland() - error", exception);
             return messageManager.databaseExceptionMessage();
         }
         player.teleport(island.getRegion().getCenter());
@@ -89,7 +89,7 @@ public class IslandServiceImpl implements IslandService{
             }
             islandRepository.deleteByOwnerName(ownerName);
         } catch (Exception exception) {
-            log.error("IslandServiceImpl - deleteIsland() - error", exception);
+            log.error("[RSB] IslandServiceImpl - deleteIsland() - error", exception);
             return messageManager.getDeleteIslandFailure();
         }
         return messageManager.getDeleteIslandSuccess();
@@ -114,7 +114,7 @@ public class IslandServiceImpl implements IslandService{
         try {
             islandRepository.save(island);
         } catch (SaveException exception) {
-            log.error("IslandServiceImpl - addMember() - error", exception);
+            log.error("[RSB] IslandServiceImpl - addMember() - error", exception);
             return messageManager.databaseExceptionMessage();
         }
         return messageManager.getAddMemberSuccess();
@@ -134,7 +134,7 @@ public class IslandServiceImpl implements IslandService{
                 try {
                     islandRepository.save(island);
                 } catch (SaveException exception) {
-                    log.error("IslandServiceImpl - removeMember() - error", exception);
+                    log.error("[RSB] IslandServiceImpl - removeMember() - error", exception);
                     return messageManager.databaseExceptionMessage();
                 }
                 return messageManager.getRemoveMemberSuccess();
@@ -157,7 +157,7 @@ public class IslandServiceImpl implements IslandService{
                 try {
                     islandRepository.save(island);
                 } catch (SaveException exception) {
-                    log.error("IslandServiceImpl - setHome() - error", exception);
+                    log.error("[RSB] IslandServiceImpl - setHome() - error", exception);
                     return messageManager.databaseExceptionMessage();
                 }
                 return messageManager.getSetHomeSuccess();
@@ -195,7 +195,7 @@ public class IslandServiceImpl implements IslandService{
         try {
             islandRepository.save(island);
         } catch (SaveException exception) {
-            log.error("IslandServiceImpl - ownerChange() - error", exception);
+            log.error("[RSB] IslandServiceImpl - ownerChange() - error", exception);
             return messageManager.databaseExceptionMessage();
         }
         return messageManager.getOwnerChangeSuccess();

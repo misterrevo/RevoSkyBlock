@@ -42,7 +42,7 @@ public class UserFileRepository implements UserRepository {
         try {
             yamlConfiguration.save(file);
         } catch (IOException exception) {
-            log.error("UserFileRepository - save() - error", exception);
+            log.error("[RSB] UserFileRepository - save() - error", exception);
             throw new SaveException(user);
         }
         return user;

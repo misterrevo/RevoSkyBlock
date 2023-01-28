@@ -60,7 +60,7 @@ public class WorldManagerImpl implements WorldManager{
             worldCreator.type(WorldType.FLAT);
             worldCreator.generator(emptyChunkGenerator);
             Bukkit.createWorld(worldCreator);
-            log.info("WorldManagerImpl - checkWorld() - created skyblock world");
+            log.info("[RSB] WorldManagerImpl - checkWorld() - created skyblock world");
         }
     }
 }

@@ -9,6 +9,7 @@ import com.revo.skyblock.command.argument.ChangeOwnerArgument;
 import com.revo.skyblock.command.argument.CreateArgument;
 import com.revo.skyblock.command.argument.DeleteArgument;
 import com.revo.skyblock.command.argument.HelpArgument;
+import com.revo.skyblock.command.argument.InfoArgument;
 import com.revo.skyblock.command.argument.RemoveMemberArgument;
 import com.revo.skyblock.command.argument.SetHomeArgument;
 import com.revo.skyblock.command.argument.TeleportToHomeArgument;
@@ -31,11 +32,13 @@ public class IslandExecutor implements CommandExecutor {
     private final RemoveMemberArgument removeMemberArgument;
     private final SetHomeArgument setHomeArgument;
     private final ChangeOwnerArgument changeOwnerArgument;
+    private final InfoArgument infoArgument;
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
         if (command.getName().equals(Constants.COMMAND)) {
             if (commandSender instanceof ConsoleCommandSender ) {
+                commandSender.sendMessage(Constants.ONLY_FOR_PLAYERS);
                 return false;
             }
             if (args.length == 0) {
@@ -64,6 +67,9 @@ public class IslandExecutor implements CommandExecutor {
                 }
                 if (args[0].equals(Constants.OWNER_CHANGE_ARGUMENT)) {
                     return changeOwnerArgument.execute(commandSender, args);
+                }
+                if (args[0].equals(Constants.INFO_ARGUMENT)) {
+                    return infoArgument.execute(commandSender, args);
                 }
             }
         }

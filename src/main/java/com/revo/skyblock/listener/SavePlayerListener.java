@@ -29,7 +29,7 @@ public class SavePlayerListener implements Listener {
             try {
                 userRepository.save(User.of(player));
             } catch (SaveException exception) {
-                log.error("JoinListener - onPlayerJoin() - error", exception);
+                log.error("[RSB] JoinListener - onPlayerJoin() - error", exception);
             }
         }
     }

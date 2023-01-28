@@ -21,7 +21,7 @@ public class Utils {
             }
             return stringBuilder.toString().replaceFirst("/", "");
         } catch (Exception exception) {
-            log.error("Utils - getPluginPath() - error", exception);
+            log.error("[RSB] Utils - getPluginPath() - error", exception);
             exception.printStackTrace();
             return null;
         }

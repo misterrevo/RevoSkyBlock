@@ -14,3 +14,4 @@ Gracz moze utworzyc wyspe i dodac do niej znajomych aby razem na niej budowac.
 /wyspa dom - teleportuje na wyspe<br>
 /wyspa dom ustaw - ustawia dom wyspy<br>
 /wyspa wlasciciel <nickname> - zmienia wlasciciela wyspy
+/wyspa info <nickname> - wyswietla informacje o wyspie

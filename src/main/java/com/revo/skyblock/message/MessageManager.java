@@ -68,7 +68,8 @@ public class MessageManager {
                 utils.replaceColors("&c/" + Constants.COMMAND + " " + Constants.REMOVE_MEMBER_ARGUMENT + " " + Constants.NICKNAME +" &8- &ausuwa gracza Z wyspy"),
                 utils.replaceColors("&c/" + Constants.COMMAND + " " + Constants.HOME_ARGUMENT + " &8- &ateleportuje na wyspe"),
                 utils.replaceColors("&c/" + Constants.COMMAND + " " + Constants.HOME_ARGUMENT + " " + Constants.SET_ARGUMENT + " &8- &austawia dom wyspy"),
-                utils.replaceColors("&c/" + Constants.COMMAND + " " + Constants.OWNER_CHANGE_ARGUMENT + " " + Constants.NICKNAME + " &8- &azmienia wlasciciela wyspy")
+                utils.replaceColors("&c/" + Constants.COMMAND + " " + Constants.OWNER_CHANGE_ARGUMENT + " " + Constants.NICKNAME + " &8- &azmienia wlasciciela wyspy"),
+                utils.replaceColors("&c/" + Constants.COMMAND + " " + Constants.INFO_ARGUMENT + " " + Constants.NICKNAME + " &8- &awyswietla informacje o wyspie")
         );
     }
 
@@ -106,5 +107,17 @@ public class MessageManager {
 
     public String getOwnerChangeSuccess() {
         return utils.replaceColors("&aZmieniono wlasciciela wyspy!");
+    }
+
+    public String getInfoArgumentIslandNotFound() {
+        return utils.replaceColors("&cTen gracz nie ma wyspy!");
+    }
+
+    public String getInfoArgumentOwnerHeader() {
+        return utils.replaceColors("&aWlasciciel: &c%s");
+    }
+
+    public String getInfoArgumentMembersHeader() {
+        return utils.replaceColors("&aCzlonkowie:");
     }
 }

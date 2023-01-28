@@ -27,4 +27,7 @@ public class Constants {
     public static final String CONFIG_COMMAND_CREATE_COOLDOWN = "island.command.cooldown";
     public static final String CONFIG_PVP = "island.pvp";
     public static final String OWNER_CHANGE_ARGUMENT = "wlasciciel";
+    public static final String MEMBER_PREFIX = "- ";
+    public static final String INFO_ARGUMENT = "info";
+    public static final String ONLY_FOR_PLAYERS = "Command only for Players!";
 }
