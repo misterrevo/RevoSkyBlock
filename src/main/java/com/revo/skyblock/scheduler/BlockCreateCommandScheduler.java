@@ -27,6 +27,7 @@ public class BlockCreateCommandScheduler {
 
 
     public void runBlockSchedule(final String name){
+        // TODO: Przemyslec czy uzytkownik zawsze jest zalgowany podczas wywyolania
         final Player player = Bukkit.getPlayer(name);
         final UUID uuid = player.getUniqueId();
         final Optional<User> userOptional = userRepository.findByUUID(uuid.toString());

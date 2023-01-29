@@ -67,6 +67,7 @@ public class IslandFileRepository implements IslandRepository {
         final File file = new File(utils.getPluginPath() + Constants.MAIN_FOLDER + Constants.SLASH + Constants.ISLANDS_FOLDER);
         for (File target : file.listFiles()) {
             final YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(target);
+            // TODO: Czy uzytkownik podany jako ownerName zawsze jest zalogowanym uzytkownikiem??
             if(yamlConfiguration.get("owner").equals(Bukkit.getPlayer(ownerName).getUniqueId())) {
                 target.delete();
                 return;
@@ -81,7 +82,7 @@ public class IslandFileRepository implements IslandRepository {
         final File file = new File(utils.getPluginPath() + Constants.MAIN_FOLDER + Constants.SLASH + Constants.ISLANDS_FOLDER);
         for (File target : file.listFiles()) {
             final YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(target);
-            if(yamlConfiguration.get("owner").equals(Bukkit.getPlayer(ownerName).getUniqueId())) {
+            if(yamlConfiguration.get("owner").equals(Bukkit.getOfflinePlayer(ownerName).getUniqueId())) {
                 final Island island = buildIsland(yamlConfiguration);
                 return Optional.of(island);
             }

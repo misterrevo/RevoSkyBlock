@@ -6,7 +6,7 @@ public interface IslandService {
     void createIsland(final Player owner);
     void deleteIsland(final Player owner);
     void addMember(final Player owner, final Player member);
-    void removeMember(final Player owner, final Player member);
+    void removeMember(final Player owner, final String memberName);
     void setHome(final Player owner);
     void teleportToHome(final Player member);
     void ownerChange(final Player owner, final Player newOwner);

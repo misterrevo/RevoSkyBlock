@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @Singleton
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
@@ -119,5 +120,9 @@ public class MessageManager {
 
     public String getInfoArgumentMembersHeader() {
         return utils.replaceColors("&aCzlonkowie:");
+    }
+
+    public String getAddMemberPlayerNotFound() {
+        return utils.replaceColors("&cNie ma takiego gracza na serwerze!");
     }
 }

@@ -17,8 +17,7 @@ public class RemoveMemberArgument implements Argument{
     @Override
     public boolean execute(CommandSender commandSender, String[] args) {
         final Player owner = (Player) commandSender;
-        final Player member = Bukkit.getPlayer(args[1]);
-        islandService.removeMember(owner, member);
+        islandService.removeMember(owner, args[1]);
         return true;
     }
 }

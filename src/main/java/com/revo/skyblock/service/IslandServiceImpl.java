@@ -104,6 +104,10 @@ public class IslandServiceImpl implements IslandService{
             owner.sendMessage(messageManager.getAddMemberIslandNotFound());
             return;
         }
+        if (member == null) {
+            owner.sendMessage(messageManager.getAddMemberPlayerNotFound());
+            return;
+        }
         final Island island = islandOptional.get();
         final List<User> members = island.getMembers();
         for(User user : members) {
@@ -125,7 +129,7 @@ public class IslandServiceImpl implements IslandService{
     }
 
     @Override
-    public void removeMember(final Player owner, final Player member) {
+    public void removeMember(final Player owner, final String memberName) {
         final Optional<Island> islandOptional = islandRepository.findByOwnerName(owner.getName());
         if(islandOptional.isEmpty()) {
             owner.sendMessage(messageManager.getRemoveMemberIslandNotFound());
@@ -134,7 +138,7 @@ public class IslandServiceImpl implements IslandService{
         final Island island = islandOptional.get();
         final List<User> members = island.getMembers();
         for(User user : members) {
-            if (user.getName().equals(member.getName())) {
+            if (user.getName().equals(memberName)) {
                 members.remove(user);
                 try {
                     islandRepository.save(island);
