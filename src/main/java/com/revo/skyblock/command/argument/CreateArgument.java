@@ -4,7 +4,10 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.revo.skyblock.service.IslandService;
 import lombok.RequiredArgsConstructor;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
 @Singleton
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 public class CreateArgument implements Argument{
@@ -13,7 +16,8 @@ public class CreateArgument implements Argument{
 
     @Override
     public boolean execute(CommandSender commandSender, String[] args) {
-        commandSender.sendMessage(islandService.createIsland(commandSender.getName()));
+        final Player owner = (Player) commandSender;
+        islandService.createIsland(owner);
         return true;
     }
 }

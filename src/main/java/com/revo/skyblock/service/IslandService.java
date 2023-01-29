@@ -1,13 +1,14 @@
 package com.revo.skyblock.service;
 
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 public interface IslandService {
-    String createIsland(final String ownerName);
-    String deleteIsland(final String ownerName);
-    String addMember(final String ownerName, final String memberName);
-    String removeMember(final String ownerName, final String memberName);
-    String setHome(final String ownerName, final Location location);
-    String teleportToHome(final String memberName);
-    String ownerChange(final String ownerName, final String newOwner);
+    void createIsland(final Player owner);
+    void deleteIsland(final Player owner);
+    void addMember(final Player owner, final Player member);
+    void removeMember(final Player owner, final Player member);
+    void setHome(final Player owner);
+    void teleportToHome(final Player member);
+    void ownerChange(final Player owner, final Player newOwner);
 }
