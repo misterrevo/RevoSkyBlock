@@ -2,7 +2,6 @@ package com.revo.skyblock.world;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.revo.skyblock.Plugin;
 import com.revo.skyblock.model.Island;
 import com.revo.skyblock.model.Region;
 import com.revo.skyblock.repository.IslandRepository;
@@ -18,7 +17,6 @@ import org.bukkit.WorldType;
 
 import java.util.List;
 import java.util.Random;
-import java.util.logging.Logger;
 
 @Singleton
 @RequiredArgsConstructor(onConstructor = @__(@Inject))

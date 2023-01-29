@@ -2,7 +2,6 @@ package com.revo.skyblock.repository.file;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.revo.skyblock.Plugin;
 import com.revo.skyblock.exception.DeleteException;
 import com.revo.skyblock.exception.SaveException;
 import com.revo.skyblock.model.Island;
@@ -23,7 +22,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Singleton

@@ -1,9 +1,7 @@
 package com.revo.skyblock.command;
 
 import com.google.inject.Inject;
-import com.google.inject.Injector;
 import com.google.inject.Singleton;
-import com.revo.skyblock.Plugin;
 import com.revo.skyblock.command.argument.AddMemberArgument;
 import com.revo.skyblock.command.argument.ChangeOwnerArgument;
 import com.revo.skyblock.command.argument.CreateArgument;

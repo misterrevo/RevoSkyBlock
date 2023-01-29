@@ -1,6 +1,5 @@
 package com.revo.skyblock.service;
 
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 public interface IslandService {

@@ -2,7 +2,6 @@ package com.revo.skyblock.repository.file;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.revo.skyblock.Plugin;
 import com.revo.skyblock.util.Constants;
 import com.revo.skyblock.util.Utils;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Logger;
 
 @Singleton
 @RequiredArgsConstructor(onConstructor = @__(@Inject))

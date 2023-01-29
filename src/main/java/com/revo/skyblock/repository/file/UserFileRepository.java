@@ -2,7 +2,6 @@ package com.revo.skyblock.repository.file;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.revo.skyblock.Plugin;
 import com.revo.skyblock.exception.SaveException;
 import com.revo.skyblock.model.User;
 import com.revo.skyblock.repository.UserRepository;
@@ -16,7 +15,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 @Singleton
 @RequiredArgsConstructor(onConstructor = @__(@Inject))

@@ -8,10 +8,7 @@ import com.revo.skyblock.model.User;
 import com.revo.skyblock.repository.IslandRepository;
 import com.revo.skyblock.util.Constants;
 import lombok.RequiredArgsConstructor;
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import java.util.Optional;
 
