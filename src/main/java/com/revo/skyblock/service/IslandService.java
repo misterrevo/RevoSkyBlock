@@ -10,4 +10,5 @@ public interface IslandService {
     void setHome(final Player owner);
     void teleportToHome(final Player member);
     void ownerChange(final Player owner, final Player newOwner);
+    void info(final Player sender, final String islandOwner);
 }

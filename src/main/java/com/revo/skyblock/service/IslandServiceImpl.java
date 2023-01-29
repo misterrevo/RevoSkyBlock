@@ -10,6 +10,7 @@ import com.revo.skyblock.model.User;
 import com.revo.skyblock.repository.IslandRepository;
 import com.revo.skyblock.repository.UserRepository;
 import com.revo.skyblock.scheduler.BlockCreateCommandScheduler;
+import com.revo.skyblock.util.Constants;
 import com.revo.skyblock.util.Utils;
 import com.revo.skyblock.world.WorldManager;
 import lombok.RequiredArgsConstructor;
@@ -211,5 +212,19 @@ public class IslandServiceImpl implements IslandService{
             return;
         }
         owner.sendMessage(messageManager.getOwnerChangeSuccess());
+    }
+
+    @Override
+    public void info(Player sender, String islandOwner) {
+        final Optional<Island> islandOptional = islandRepository.findByOwnerName(islandOwner);
+        if (islandOptional.isEmpty()) {
+            sender.sendMessage(messageManager.getInfoArgumentIslandNotFound());
+            return;
+        }
+        final Island island = islandOptional.get();
+        final User owner = island.getOwner();
+        sender.sendMessage(messageManager.getInfoArgumentOwnerHeader().formatted(owner.getName()));
+        sender.sendMessage(messageManager.getInfoArgumentMembersHeader());
+        island.getMembers().forEach(member -> sender.sendMessage(Constants.MEMBER_PREFIX + member.getName()));
     }
 }

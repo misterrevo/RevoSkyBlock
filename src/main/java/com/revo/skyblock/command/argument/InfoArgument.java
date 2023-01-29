@@ -6,9 +6,11 @@ import com.revo.skyblock.message.MessageManager;
 import com.revo.skyblock.model.Island;
 import com.revo.skyblock.model.User;
 import com.revo.skyblock.repository.IslandRepository;
+import com.revo.skyblock.service.IslandService;
 import com.revo.skyblock.util.Constants;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.Optional;
 
@@ -16,21 +18,12 @@ import java.util.Optional;
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 public class InfoArgument implements Argument{
 
-    private final IslandRepository islandRepository;
-    private final MessageManager messageManager;
+    private final IslandService islandService;
 
     @Override
     public boolean execute(CommandSender commandSender, String[] args) {
-        final Optional<Island> islandOptional = islandRepository.findByOwnerName(args[1]);
-        if (islandOptional.isEmpty()) {
-            commandSender.sendMessage(messageManager.getInfoArgumentIslandNotFound());
-            return true;
-        }
-        final Island island = islandOptional.get();
-        final User owner = island.getOwner();
-        commandSender.sendMessage(messageManager.getInfoArgumentOwnerHeader().formatted(owner.getName()));
-        commandSender.sendMessage(messageManager.getInfoArgumentMembersHeader());
-        island.getMembers().forEach(member -> commandSender.sendMessage(Constants.MEMBER_PREFIX + member.getName()));
+        final Player sender = (Player) commandSender;
+        islandService.info(sender, args[1]);
         return true;
     }
 }
