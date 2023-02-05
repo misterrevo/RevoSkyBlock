@@ -5,6 +5,7 @@ import com.google.inject.Singleton;
 import com.revo.skyblock.exception.SaveException;
 import com.revo.skyblock.model.User;
 import com.revo.skyblock.repository.UserRepository;
+import com.revo.skyblock.util.Constants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bukkit.entity.Player;
@@ -26,7 +27,7 @@ public class SavePlayerListener implements Listener {
             try {
                 userRepository.save(User.of(player));
             } catch (SaveException exception) {
-                log.error("[RSB] JoinListener - onPlayerJoin() - error", exception);
+                log.error(Constants.TAG + " JoinListener - onPlayerJoin() - error", exception);
             }
         }
     }

@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,12 +48,12 @@ public class IslandFileRepository implements IslandRepository {
         yamlConfiguration.set("id", island.getId());
         yamlConfiguration.set("center", locationToYaml(island.getRegion().getCenter()));
         yamlConfiguration.set("owner", island.getOwner().getUuid().toString());
-        yamlConfiguration.set("members", island.getMembers().stream().map(member -> member.getUuid().toString()));
+        yamlConfiguration.set("members", island.getMembers().stream().map(member -> member.getUuid().toString()).collect(Collectors.toList()));
         yamlConfiguration.set("home", locationToYaml(island.getHome()));
         try {
             yamlConfiguration.save(file);
         } catch (IOException exception) {
-            log.error("[RSB] IslandFileRepository - save() - error", exception);
+            log.error(Constants.TAG + " IslandFileRepository - save() - error", exception);
             throw new SaveException(island);
         }
         return island;
@@ -63,26 +64,25 @@ public class IslandFileRepository implements IslandRepository {
     }
 
     @Override
-    public void deleteByOwnerName(final String ownerName) throws DeleteException {
+    public void deleteByOwner(final String uuid) throws DeleteException {
         final File file = new File(utils.getPluginPath() + Constants.MAIN_FOLDER + Constants.SLASH + Constants.ISLANDS_FOLDER);
         for (File target : file.listFiles()) {
             final YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(target);
-            // TODO: Czy uzytkownik podany jako ownerName zawsze jest zalogowanym uzytkownikiem??
-            if(yamlConfiguration.get("owner").equals(Bukkit.getPlayer(ownerName).getUniqueId())) {
+            if(yamlConfiguration.get("owner").equals(uuid)) {
                 target.delete();
                 return;
             }
         }
-        log.error("[RSB] IslandFileRepository - deleteByOwnerName() - error key = {}", ownerName);
-        throw new DeleteException(ownerName);
+        log.error(Constants.TAG + " IslandFileRepository - deleteByOwnerName() - error key = {}", uuid);
+        throw new DeleteException(uuid);
     }
 
     @Override
-    public Optional<Island> findByOwnerName(final String ownerName) {
+    public Optional<Island> findByOwner(final String uuid) {
         final File file = new File(utils.getPluginPath() + Constants.MAIN_FOLDER + Constants.SLASH + Constants.ISLANDS_FOLDER);
         for (File target : file.listFiles()) {
             final YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(target);
-            if(yamlConfiguration.get("owner").equals(Bukkit.getOfflinePlayer(ownerName).getUniqueId())) {
+            if(yamlConfiguration.get("owner").equals(uuid)) {
                 final Island island = buildIsland(yamlConfiguration);
                 return Optional.of(island);
             }

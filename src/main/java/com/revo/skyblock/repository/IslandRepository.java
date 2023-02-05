@@ -11,9 +11,9 @@ public interface IslandRepository {
 
     Island save(final Island island) throws SaveException;
 
-    void deleteByOwnerName(final String ownerName) throws DeleteException;
+    void deleteByOwner(final String uuid) throws DeleteException;
 
-    Optional<Island> findByOwnerName(final String ownerName);
+    Optional<Island> findByOwner(final String uuid);
 
     List<Island> findAll();
 }

@@ -56,7 +56,7 @@ public class BuildListener implements Listener {
 
     private void blockEventOutOfIsland(final Cancellable event, final Player player) {
         if (isSkyblockWorld(player)) {
-            final Optional<Island> islandOptional = islandRepository.findByOwnerName(player.getName());
+            final Optional<Island> islandOptional = islandRepository.findByOwner(player.getUniqueId().toString());
             if (islandOptional.isEmpty()) {
                 event.setCancelled(true);
                 return;

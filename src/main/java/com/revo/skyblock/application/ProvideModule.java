@@ -1,5 +1,6 @@
 package com.revo.skyblock.application;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.revo.skyblock.message.MessageManager;
@@ -17,6 +18,11 @@ import com.revo.skyblock.world.WorldManager;
 import com.revo.skyblock.world.WorldManagerImpl;
 
 public class ProvideModule extends AbstractModule {
+
+    @Provides
+    ObjectMapper objectMapper(){
+        return new ObjectMapper();
+    }
 
     @Provides
     WorldManager worldManager(final EmptyChunkGenerator emptyChunkGenerator, final IslandRepository islandRepository) {

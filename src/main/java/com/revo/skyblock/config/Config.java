@@ -23,7 +23,7 @@ public class Config {
         if (!file.exists()) {
             final Plugin plugin = Plugin.getApplicationContext();
             plugin.saveDefaultConfig();
-            log.info("[RSB] Config - checkConfig() - save default config");
+            log.info(Constants.TAG + " Config - checkConfig() - save default config");
         }
     }
 

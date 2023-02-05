@@ -45,7 +45,7 @@ public class IslandServiceImpl implements IslandService{
             owner.sendMessage(messageManager.getCreateIslandSchedule());
             return;
         }
-        if (hasIsland(owner.getName())) {
+        if (hasIsland(uuid.toString())) {
             owner.sendMessage(messageManager.getCreateIslandHasIsland());
             return;
         }
@@ -58,7 +58,7 @@ public class IslandServiceImpl implements IslandService{
         try {
             islandRepository.save(island);
         } catch (Exception exception) {
-            log.error("[RSB] IslandServiceImpl - createIsland() - error", exception);
+            log.error(Constants.TAG + " IslandServiceImpl - createIsland() - error", exception);
             owner.sendMessage(messageManager.databaseExceptionMessage());
             return;
         }
@@ -77,29 +77,29 @@ public class IslandServiceImpl implements IslandService{
         return true;
     }
 
-    private boolean hasIsland(final String ownerName) {
-        return islandRepository.findByOwnerName(ownerName).isPresent();
+    private boolean hasIsland(final String uuid) {
+        return islandRepository.findByOwner(uuid).isPresent();
     }
 
     @Override
     public void deleteIsland(final Player owner) {
         try {
-            final Island island = islandRepository.findByOwnerName(owner.getName()).get();
+            final Island island = islandRepository.findByOwner(owner.getUniqueId().toString()).get();
             final Region region = island.getRegion();
             for (Location location : region.getProtectedLocations()) {
                 location.getBlock().setType(Material.AIR);
             }
-            islandRepository.deleteByOwnerName(owner.getName());
+            islandRepository.deleteByOwner(owner.getUniqueId().toString());
             owner.sendMessage(messageManager.getDeleteIslandSuccess());
         } catch (Exception exception) {
-            log.error("[RSB] IslandServiceImpl - deleteIsland() - error", exception);
+            log.error(Constants.TAG + " IslandServiceImpl - deleteIsland() - error", exception);
             owner.sendMessage(messageManager.getDeleteIslandFailure());
         }
     }
 
     @Override
     public void addMember(final Player owner, final Player member) {
-        final Optional<Island> islandOptional = islandRepository.findByOwnerName(owner.getName());
+        final Optional<Island> islandOptional = islandRepository.findByOwner(owner.getUniqueId().toString());
         if(islandOptional.isEmpty()) {
             owner.sendMessage(messageManager.getAddMemberIslandNotFound());
             return;
@@ -121,7 +121,7 @@ public class IslandServiceImpl implements IslandService{
         try {
             islandRepository.save(island);
         } catch (SaveException exception) {
-            log.error("[RSB] IslandServiceImpl - addMember() - error", exception);
+            log.error(Constants.TAG + " IslandServiceImpl - addMember() - error", exception);
             owner.sendMessage(messageManager.databaseExceptionMessage());
             return;
         }
@@ -130,7 +130,7 @@ public class IslandServiceImpl implements IslandService{
 
     @Override
     public void removeMember(final Player owner, final String memberName) {
-        final Optional<Island> islandOptional = islandRepository.findByOwnerName(owner.getName());
+        final Optional<Island> islandOptional = islandRepository.findByOwner(owner.getUniqueId().toString());
         if(islandOptional.isEmpty()) {
             owner.sendMessage(messageManager.getRemoveMemberIslandNotFound());
             return;
@@ -143,7 +143,7 @@ public class IslandServiceImpl implements IslandService{
                 try {
                     islandRepository.save(island);
                 } catch (SaveException exception) {
-                    log.error("[RSB] IslandServiceImpl - removeMember() - error", exception);
+                    log.error(Constants.TAG + " IslandServiceImpl - removeMember() - error", exception);
                     owner.sendMessage(messageManager.databaseExceptionMessage());
                     return;
                 }
@@ -156,7 +156,7 @@ public class IslandServiceImpl implements IslandService{
 
     @Override
     public void setHome(final Player owner) {
-        final Optional<Island> islandOptional = islandRepository.findByOwnerName(owner.getName());
+        final Optional<Island> islandOptional = islandRepository.findByOwner(owner.getUniqueId().toString());
         if (islandOptional.isEmpty()) {
             owner.sendMessage(messageManager.getSetHomeIslandNotFound());
             return;
@@ -170,7 +170,7 @@ public class IslandServiceImpl implements IslandService{
                 try {
                     islandRepository.save(island);
                 } catch (SaveException exception) {
-                    log.error("[RSB] IslandServiceImpl - setHome() - error", exception);
+                    log.error(Constants.TAG + " IslandServiceImpl - setHome() - error", exception);
                     owner.sendMessage(messageManager.databaseExceptionMessage());
                     return;
                 }
@@ -184,8 +184,14 @@ public class IslandServiceImpl implements IslandService{
     @Override
     public void teleportToHome(final Player member) {
         final List<Island> islands = islandRepository.findAll();
+        final Optional<User> userOptional = userRepository.findByUUID(member.getUniqueId().toString());
+        if (userOptional.isEmpty()) {
+            log.error(Constants.TAG + " IslandServiceImpl - teleportToHome - unsaved player = {}", member.getName());
+            return;
+        }
+        final User user = userOptional.get();
         for (Island island : islands) {
-            if (island.getMembers().contains(User.of(member))) {
+            if (island.getMembers().contains(user)) {
                 member.teleport(island.getHome());
                 member.sendMessage(messageManager.getTeleportToHomeSuccess());
                 return;
@@ -196,7 +202,7 @@ public class IslandServiceImpl implements IslandService{
 
     @Override
     public void ownerChange(final Player owner, final Player newOwner) {
-        final Optional<Island> islandOptional = islandRepository.findByOwnerName(owner.getName());
+        final Optional<Island> islandOptional = islandRepository.findByOwner(owner.getUniqueId().toString());
         if (islandOptional.isEmpty()) {
             owner.sendMessage(messageManager.getOwnerChangeNoIsland());
             return;
@@ -211,7 +217,7 @@ public class IslandServiceImpl implements IslandService{
         try {
             islandRepository.save(island);
         } catch (SaveException exception) {
-            log.error("[RSB] IslandServiceImpl - ownerChange() - error", exception);
+            log.error(Constants.TAG + " IslandServiceImpl - ownerChange() - error", exception);
             owner.sendMessage(messageManager.databaseExceptionMessage());
             return;
         }
@@ -220,7 +226,13 @@ public class IslandServiceImpl implements IslandService{
 
     @Override
     public void info(Player sender, String islandOwner) {
-        final Optional<Island> islandOptional = islandRepository.findByOwnerName(islandOwner);
+        final Optional<User> userOptional = userRepository.findByName(islandOwner);
+        if (islandOwner.isEmpty()) {
+            sender.sendMessage(messageManager.getInfoArgumentIslandNotFound());
+            return;
+        }
+        final User user = userOptional.get();
+        final Optional<Island> islandOptional = islandRepository.findByOwner(user.getUuid().toString());
         if (islandOptional.isEmpty()) {
             sender.sendMessage(messageManager.getInfoArgumentIslandNotFound());
             return;

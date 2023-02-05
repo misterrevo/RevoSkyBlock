@@ -23,7 +23,7 @@ public class Region {
         for (int x = (startX - size); x < (startX + size) ; x++) {
             for (int z = (startZ - size); z < (startZ + size); z++) {
                 for (int y = 0; y < 255; y++) {
-                    locations.add(new Location(Bukkit.getWorld(Constants.SKYBLOCK_WORLD), x, 0, z));
+                    locations.add(new Location(Bukkit.getWorld(Constants.SKYBLOCK_WORLD), x, y, z));
                 }
             }
         }

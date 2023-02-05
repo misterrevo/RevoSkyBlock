@@ -18,19 +18,31 @@ public class FileManager {
     private final Utils utils;
 
     public void checkFiles() {
+        checkMainFolder();
+        checkIslandsFolder();
+        checkUsersFolder();
+    }
+
+    private void checkMainFolder() {
         final File folder = new File(utils.getPluginPath() + Constants.MAIN_FOLDER);
         if (!folder.exists()) {
-            log.info("[RSB] FileManager - checkFiles - mkdir " + Constants.MAIN_FOLDER);
+            log.info(Constants.TAG + " FileManager - checkFiles - mkdir " + Constants.MAIN_FOLDER);
             folder.mkdir();
         }
+    }
+
+    private void checkIslandsFolder() {
         final File islandsFolder = new File(utils.getPluginPath() + Constants.MAIN_FOLDER + Constants.SLASH + Constants.ISLANDS_FOLDER);
         if (!islandsFolder.exists()) {
-            log.info("[RSB] FileManager - checkFiles - mkdir " + Constants.ISLANDS_FOLDER);
+            log.info(Constants.TAG + " FileManager - checkFiles - mkdir " + Constants.ISLANDS_FOLDER);
             islandsFolder.mkdir();
         }
+    }
+
+    private void checkUsersFolder() {
         final File usersFolder = new File(utils.getPluginPath() + Constants.MAIN_FOLDER + Constants.SLASH + Constants.USERS_FOLDER);
         if (!usersFolder.exists()) {
-            log.info("[RSB] FileManager - checkFiles - mkdir " + Constants.USERS_FOLDER);
+            log.info(Constants.TAG + " FileManager - checkFiles - mkdir " + Constants.USERS_FOLDER);
             usersFolder.mkdir();
         }
     }
@@ -40,7 +52,7 @@ public class FileManager {
             try {
                 file.createNewFile();
             } catch (IOException exception) {
-                log.error("[RSB] FileManager - checkFile() - error", exception);
+                log.error(Constants.TAG + " FileManager - checkFile() - error", exception);
                 return false;
             }
         }

@@ -30,4 +30,6 @@ public class Constants {
     public static final String MEMBER_PREFIX = "- ";
     public static final String INFO_ARGUMENT = "info";
     public static final String ONLY_FOR_PLAYERS = "Command only for Players!";
+    public static final String SCHEMA_FILE = "schema.json";
+    public static final String TAG = "[RSB]";
 }

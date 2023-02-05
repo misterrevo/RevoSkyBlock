@@ -69,6 +69,8 @@
 
   <dependencies>
 
+    <!-- Spigot API -->
+
     <dependency>
       <groupId>org.spigotmc</groupId>
       <artifactId>spigot-api</artifactId>
@@ -76,11 +78,15 @@
       <scope>provided</scope>
     </dependency>
 
+    <!-- Dependency injection -->
+
     <dependency>
       <groupId>com.google.inject</groupId>
       <artifactId>guice</artifactId>
       <version>5.1.0</version>
     </dependency>
+
+    <!-- Lombok -->
 
     <dependency>
       <groupId>org.projectlombok</groupId>
@@ -89,12 +95,21 @@
       <scope>provided</scope>
     </dependency>
 
+    <!-- Logger -->
+
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
       <version>2.0.6</version>
     </dependency>
 
+    <!-- JSON -->
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.14.2</version>
+    </dependency>
 
   </dependencies>
 

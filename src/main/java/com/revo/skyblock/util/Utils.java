@@ -21,7 +21,7 @@ public class Utils {
             }
             return stringBuilder.toString().replaceFirst("/", "");
         } catch (Exception exception) {
-            log.error("[RSB] Utils - getPluginPath() - error", exception);
+            log.error(Constants.TAG + " Utils - getPluginPath() - error", exception);
             exception.printStackTrace();
             return null;
         }
@@ -44,6 +44,6 @@ public class Utils {
     }
 
     public boolean isSameLocation(Location target, Location location) {
-        return target.getX() == location.getX() && target.getZ() == location.getZ() && target.getY() == location.getY() && location.getWorld().getName().equals(Constants.SKYBLOCK_WORLD);
+        return target.getBlockX() == location.getBlockX() && target.getBlockZ() == location.getBlockZ() && target.getBlockY() == location.getBlockY() && location.getWorld().getName().equals(Constants.SKYBLOCK_WORLD);
     }
 }

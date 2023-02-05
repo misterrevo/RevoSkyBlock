@@ -40,7 +40,7 @@ public class UserFileRepository implements UserRepository {
         try {
             yamlConfiguration.save(file);
         } catch (IOException exception) {
-            log.error("[RSB] UserFileRepository - save() - error", exception);
+            log.error(Constants.TAG + " UserFileRepository - save() - error", exception);
             throw new SaveException(user);
         }
         return user;
@@ -52,6 +52,24 @@ public class UserFileRepository implements UserRepository {
         for (File target : file.listFiles()) {
             final YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(target);
             if(yamlConfiguration.get("uuid").equals(uuid)) {
+                final User user = User.builder()
+                        .id(yamlConfiguration.getLong("id"))
+                        .uuid(UUID.fromString(yamlConfiguration.getString("uuid")))
+                        .name(yamlConfiguration.getString("name"))
+                        .onCooldown(yamlConfiguration.getBoolean("onCooldown"))
+                        .build();
+                return Optional.of(user);
+            }
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<User> findByName(String name) {
+        final File file = new File(utils.getPluginPath() + Constants.MAIN_FOLDER + Constants.SLASH + Constants.USERS_FOLDER);
+        for (File target : file.listFiles()) {
+            final YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(target);
+            if(yamlConfiguration.get("name").equals(name)) {
                 final User user = User.builder()
                         .id(yamlConfiguration.getLong("id"))
                         .uuid(UUID.fromString(yamlConfiguration.getString("uuid")))
