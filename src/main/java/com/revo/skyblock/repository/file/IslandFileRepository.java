@@ -39,7 +39,7 @@ public class IslandFileRepository implements IslandRepository {
     @Override
     public Island save(final Island island) throws SaveException {
         if(island.getId() == null) {
-            island.setId(utils.getLastId(Constants.ISLANDS_FOLDER));
+            island.setId(utils.getLastId(Constants.ISLANDS_FOLDER) + 1);
         }
         final File file = new File(utils.getPluginPath() + Constants.MAIN_FOLDER + Constants.SLASH + Constants.ISLANDS_FOLDER + Constants.SLASH + island.getId() + Constants.YAML_SUFFIX);
         fileManager.checkFile(file);
@@ -50,6 +50,7 @@ public class IslandFileRepository implements IslandRepository {
         yamlConfiguration.set("owner", island.getOwner().getUuid().toString());
         yamlConfiguration.set("members", island.getMembers().stream().map(member -> member.getUuid().toString()).collect(Collectors.toList()));
         yamlConfiguration.set("home", locationToYaml(island.getHome()));
+        yamlConfiguration.set("invited", island.getInvited().stream().map(member -> member.getUuid().toString()).collect(Collectors.toList()));
         try {
             yamlConfiguration.save(file);
         } catch (IOException exception) {
@@ -99,6 +100,7 @@ public class IslandFileRepository implements IslandRepository {
                         .build())
                 .id(yamlConfiguration.getLong("id"))
                 .home(getLocationFromYaml(yamlConfiguration.getString("home")))
+                .invited(getUsersFromYaml(yamlConfiguration.getStringList("invited")))
                 .build();
     }
 
@@ -112,6 +114,19 @@ public class IslandFileRepository implements IslandRepository {
             islands.add(island);
         }
         return islands;
+    }
+
+    @Override
+    public Optional<Island> findByMember(String uuid) {
+        final File file = new File(utils.getPluginPath() + Constants.MAIN_FOLDER + Constants.SLASH + Constants.ISLANDS_FOLDER);
+        for (File target : file.listFiles()) {
+            final YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(target);
+            if(yamlConfiguration.getList("members").contains(uuid)) {
+                final Island island = buildIsland(yamlConfiguration);
+                return Optional.of(island);
+            }
+        }
+        return Optional.empty();
     }
 
     private Location getLocationFromYaml(final String center) {

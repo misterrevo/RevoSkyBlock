@@ -32,7 +32,7 @@ public class WorldManagerImpl implements WorldManager{
         final List<Island> islands = islandRepository.findAll();
         final Location location = getCenterLocation(islands);
         final Region region = island.getRegion();
-        region.setCenter(location);
+        region.setCenter(new Location(location.getWorld(), location.getX(), location.getY() + 1, location.getZ()));
         location.getBlock().setType(Material.DIRT);
     }
 

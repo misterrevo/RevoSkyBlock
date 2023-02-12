@@ -117,7 +117,15 @@ public class IslandServiceImpl implements IslandService{
             }
         }
         final User user = User.of(member);
-        members.add(user);
+        final List<User> invited = island.getInvited();
+        final List<Island> islands = islandRepository.findAll();
+        for (Island target : islands) {
+            if (target.getMembers().contains(user)) {
+                owner.sendMessage(messageManager.getAddMemberHasIsland());
+                return;
+            }
+        }
+        invited.add(user);
         try {
             islandRepository.save(island);
         } catch (SaveException exception) {
@@ -166,7 +174,7 @@ public class IslandServiceImpl implements IslandService{
         final Location location = owner.getLocation();
         for (Location target : region.getProtectedLocations()) {
             if (utils.isSameLocation(target, location)) {
-                island.setHome(location);
+                island.setHome(new Location(location.getWorld(), location.getX(), location.getY() + 1, location.getZ()));
                 try {
                     islandRepository.save(island);
                 } catch (SaveException exception) {
@@ -225,14 +233,14 @@ public class IslandServiceImpl implements IslandService{
     }
 
     @Override
-    public void info(Player sender, String islandOwner) {
-        final Optional<User> userOptional = userRepository.findByName(islandOwner);
-        if (islandOwner.isEmpty()) {
+    public void info(final Player sender, final String islandMember) {
+        final Optional<User> userOptional = userRepository.findByName(islandMember);
+        if (islandMember.isEmpty()) {
             sender.sendMessage(messageManager.getInfoArgumentIslandNotFound());
             return;
         }
         final User user = userOptional.get();
-        final Optional<Island> islandOptional = islandRepository.findByOwner(user.getUuid().toString());
+        final Optional<Island> islandOptional = islandRepository.findByMember(user.getUuid().toString());
         if (islandOptional.isEmpty()) {
             sender.sendMessage(messageManager.getInfoArgumentIslandNotFound());
             return;
@@ -242,5 +250,15 @@ public class IslandServiceImpl implements IslandService{
         sender.sendMessage(messageManager.getInfoArgumentOwnerHeader().formatted(owner.getName()));
         sender.sendMessage(messageManager.getInfoArgumentMembersHeader());
         island.getMembers().forEach(member -> sender.sendMessage(Constants.MEMBER_PREFIX + member.getName()));
+    }
+
+    @Override
+    public void acceptInvite(final Player member, final String ownerName) {
+        final Optional<Island> islandOptional = islandRepository.findByMember(member.getUniqueId().toString());
+        if (islandOptional.isPresent()) {
+            member.sendMessage(messageManager.acceptInviteHasIsland());
+            return;
+        }
+        // TODO: Dokonczyc metode i zrobic wywolanie w command executor dla niej
     }
 }

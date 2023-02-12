@@ -21,7 +21,7 @@ public class Constants {
     public static final String YAML_SUFFIX = ".yml";
     public static final String ISLANDS_FOLDER = "ISLANDS";
     public static final String LOCATION_SEPARATOR = ";";
-    public static final String DOT = ".";
+    public static final String DOT = "\\.";
     public static final String SKYBLOCK_WORLD = "skyblock";
     public static final String USERS_FOLDER = "USERS";
     public static final String CONFIG_COMMAND_CREATE_COOLDOWN = "island.command.cooldown";
@@ -30,6 +30,5 @@ public class Constants {
     public static final String MEMBER_PREFIX = "- ";
     public static final String INFO_ARGUMENT = "info";
     public static final String ONLY_FOR_PLAYERS = "Command only for Players!";
-    public static final String SCHEMA_FILE = "schema.json";
     public static final String TAG = "[RSB]";
 }

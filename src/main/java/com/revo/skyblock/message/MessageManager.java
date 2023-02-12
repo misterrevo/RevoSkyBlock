@@ -37,7 +37,7 @@ public class MessageManager {
     }
 
     public String getAddMemberSuccess() {
-        return utils.replaceColors("&aPomyslnie dodano gracza do wyspy!");
+        return utils.replaceColors("&aPomyslnie zaproszono gracza do wyspy!");
     }
 
     public String getAddMemberIsMember() {
@@ -124,5 +124,13 @@ public class MessageManager {
 
     public String getAddMemberPlayerNotFound() {
         return utils.replaceColors("&cNie ma takiego gracza na serwerze!");
+    }
+
+    public String getAddMemberHasIsland() {
+        return utils.replaceColors("&cTen gracz ma juz wyspe!");
+    }
+
+    public String acceptInviteHasIsland() {
+        return utils.replaceColors("&cMasz juz wyspe!");
     }
 }

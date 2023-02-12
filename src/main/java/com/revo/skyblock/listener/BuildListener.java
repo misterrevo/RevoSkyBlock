@@ -16,9 +16,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerShearEntityEvent;
 
+import java.util.List;
 import java.util.Optional;
 
 @Singleton
@@ -54,9 +56,14 @@ public class BuildListener implements Listener {
         blockEventOutOfIsland(event, event.getPlayer());
     }
 
+    @EventHandler
+    public void onInteract(final PlayerInteractEvent event) {
+        blockEventOutOfIsland(event, event.getPlayer());
+    }
+
     private void blockEventOutOfIsland(final Cancellable event, final Player player) {
         if (isSkyblockWorld(player)) {
-            final Optional<Island> islandOptional = islandRepository.findByOwner(player.getUniqueId().toString());
+            final Optional<Island> islandOptional = islandRepository.findByMember(player.getUniqueId().toString());
             if (islandOptional.isEmpty()) {
                 event.setCancelled(true);
                 return;

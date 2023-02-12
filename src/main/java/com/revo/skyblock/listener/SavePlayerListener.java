@@ -32,7 +32,7 @@ public class SavePlayerListener implements Listener {
         }
     }
 
-    private boolean notExistsInBase(Player player) {
+    private boolean notExistsInBase(final Player player) {
         return !userRepository.existsByName(player.getName());
     }
 

@@ -17,5 +17,7 @@ public class Island {
     private User owner;
     @Builder.Default
     private List<User> members = new ArrayList<>();
+    @Builder.Default
+    private List<User> invited = new ArrayList<>();
     private Location home;
 }

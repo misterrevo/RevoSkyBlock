@@ -16,4 +16,6 @@ public interface IslandRepository {
     Optional<Island> findByOwner(final String uuid);
 
     List<Island> findAll();
+
+    Optional<Island> findByMember(final String uuid);
 }
