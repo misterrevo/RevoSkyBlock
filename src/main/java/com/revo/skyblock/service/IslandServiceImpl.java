@@ -254,11 +254,36 @@ public class IslandServiceImpl implements IslandService{
 
     @Override
     public void acceptInvite(final Player member, final String ownerName) {
-        final Optional<Island> islandOptional = islandRepository.findByMember(member.getUniqueId().toString());
-        if (islandOptional.isPresent()) {
-            member.sendMessage(messageManager.acceptInviteHasIsland());
+        final Optional<Island> islandOptionalMember = islandRepository.findByMember(member.getUniqueId().toString());
+        if (islandOptionalMember.isPresent()) {
+            member.sendMessage(messageManager.getAcceptInviteHasIsland());
             return;
         }
-        // TODO: Dokonczyc metode i zrobic wywolanie w command executor dla niej
+        final Optional<User> userOptional = userRepository.findByName(ownerName);
+        if (userOptional.isEmpty()) {
+            log.error(Constants.TAG + "IslandServiceImpl - acceptInvite() - empty user error");
+            return;
+        }
+        final User user = userOptional.get();
+        Optional<Island> islandOptionalOwner = islandRepository.findByOwner(user.getUuid().toString());
+        final Island island = islandOptionalOwner.get();
+        final List<User> invited = island.getInvited();
+        for (User target : invited) {
+            if (target.getUuid().equals(member.getUniqueId())) {
+                addUserToIsland(target, island);
+                member.sendMessage(messageManager.getAcceptInviteSuccess());
+                return;
+            }
+        }
+        member.sendMessage(messageManager.getAcceptInviteNoInvited());
+    }
+
+    private void addUserToIsland(final User target, final Island island) {
+        island.getMembers().add(target);
+        try {
+            islandRepository.save(island);
+        } catch (SaveException exception) {
+            log.error(Constants.TAG + "IslandServiceImpl - addUserToIsland() - error", exception);
+        }
     }
 }

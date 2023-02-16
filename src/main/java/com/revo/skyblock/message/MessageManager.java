@@ -130,7 +130,19 @@ public class MessageManager {
         return utils.replaceColors("&cTen gracz ma juz wyspe!");
     }
 
-    public String acceptInviteHasIsland() {
+    public String getAcceptInviteHasIsland() {
         return utils.replaceColors("&cMasz juz wyspe!");
+    }
+
+    public String getAcceptInviteHasNotIsland() {
+        return utils.replaceColors("&c Ten gracz nie jest wlascicielem wyspy!");
+    }
+
+    public String getAcceptInviteSuccess() {
+        return utils.replaceColors("&a Dolaczono do wyspy!");
+    }
+
+    public String getAcceptInviteNoInvited() {
+        return utils.replaceColors("&cNie masz zaproszenia do tej wyspy!");
     }
 }
